@@ -1,28 +1,28 @@
 const { User } = require("../../database/models");
-const { compare } = require('bcryptjs');
-
-const validatePassword = async (password, cryptPassword) => compare(password, cryptPassword);
+const md5 = require('md5');
 
 async function login(email, password) {
   const user = await User.findOne({ where: { email }  });
 
   if (!user) throw ({  
     status: 404,
-    message: "Usuário não encontrado"
+    message: "User not found"
   });
 
-  if (await validatePassword(password, user.dataValues.password) === false) {
-    throw ({
-      status: 401,
-      message: "Incorrect email or password",
-    });
-  }
+  const passwordFromBD = user.dataValues.password;
+  const passwordHash = md5(password)
 
-  // const token = createToken(user as User);
-
-  // return { status: 200, data: { token } };
-
+  if (passwordHash !== passwordFromBD) throw ({
+    status: 401,
+    message: "Incorrect email or password",
+  });
+  
   return { status: 200 };
 }
 
-module.exports = { login };
+async function getUserByEmail(email) {
+  const user = await User.findOne({ where: { email }  });
+  return user;
+}
+
+module.exports = { login, getUserByEmail };
