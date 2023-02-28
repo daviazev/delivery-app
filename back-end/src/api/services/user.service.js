@@ -1,24 +1,28 @@
-const User = require("../../database/models");
+const { User } = require("../../database/models");
 const { compare } = require('bcryptjs');
 
+const validatePassword = async (password, cryptPassword) => compare(password, cryptPassword);
+
 async function login(email, password) {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email }  });
 
-  if (!user) {
-    return { status: 401, error: { message: 'Incorrect email or password' } };
-  }
+  if (!user) throw ({  
+    status: 404,
+    message: "Usuário não encontrado"
+  });
 
-  const compare = compare(password, user.password);
-
-  if (!compare) {
-    return { status: 401, error: { message: 'Incorrect email or password' } };
+  if (await validatePassword(password, user.dataValues.password) === false) {
+    throw ({
+      status: 401,
+      message: "Incorrect email or password",
+    });
   }
 
   // const token = createToken(user as User);
 
   // return { status: 200, data: { token } };
 
-  return { status: 200, data: { token } };
+  return { status: 200 };
 }
 
 module.exports = { login };
