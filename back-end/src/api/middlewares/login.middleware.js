@@ -1,4 +1,4 @@
-const { validateLoginField } = require('./validations/validations.values')
+const { validateLoginField } = require('./validations/validations.values');
 
 const loginValidation = (req, _res, next) => {
   const { email, password } = req.body;
@@ -8,7 +8,7 @@ const loginValidation = (req, _res, next) => {
   const { message } = validation;
   
   if (validation.type) { 
-    throw({ status: 400, message });
+    throw new Error({ status: 400, message });
   }
   
   return next();
@@ -16,4 +16,4 @@ const loginValidation = (req, _res, next) => {
   
 module.exports = {
   loginValidation,
-}
+};

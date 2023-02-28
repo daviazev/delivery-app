@@ -7,4 +7,4 @@ const loginFieldsValidation = Joi.object({
 
 module.exports = {
   loginFieldsValidation,
-}
+};

@@ -9,11 +9,11 @@ const generateToken = (email, password) => {
     algorithm: 'HS256',
   };
 
-  const token = jwt.sign({ data: { email, password }}, secret, jwtConfig);
+  const token = jwt.sign({ data: { email, password } }, secret, jwtConfig);
 
   return token;
-}
+};
 
 module.exports = {
   generateToken,
-}
+};
