@@ -8,7 +8,8 @@ async function login(req, res, next) {
     const user = await userService.login(email, password);
     if (user.status === 200) {
       const token = generateToken(email, password)
-      return res.status(200).json({ token })
+      const role = user.user.dataValues.role;
+      return res.status(200).json({ token, role })
     }
   } catch (error) {
     next(error)

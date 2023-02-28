@@ -13,6 +13,8 @@ export default function Login() {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const validateForm = () => {
       const { email, password } = user;
@@ -30,15 +32,17 @@ export default function Login() {
     console.log('Logou', user);
     try {
       const result = await loginApi.post('/login', user);
-      console.log('Usuario logado');
-      console.log(result);
+      const { role } = result.data;
+      console.log(role);
+      if (role === 'customer') {
+        navigate('/customer/products');
+      }
     } catch (error) {
+      console.log(error);
       setErrorMessage(error.message);
       console.error(error);
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <section>

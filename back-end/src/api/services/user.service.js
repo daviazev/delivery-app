@@ -17,7 +17,7 @@ async function login(email, password) {
     message: "Incorrect email or password",
   });
   
-  return { status: 200 };
+  return { status: 200, user };
 }
 
 async function getUserByEmail(email) {
