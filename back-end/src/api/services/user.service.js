@@ -5,21 +5,22 @@ async function login(email, password) {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    throw new Error({  
+    return {  
        status: 404,
        message: 'User not found',
-     }); 
+     };
   }
 
   const passwordFromBD = user.dataValues.password;
   const passwordHash = md5(password);
 
   if (passwordHash !== passwordFromBD) {
-    throw new Error({
+    return {
        status: 401,
        message: 'Incorrect email or password',
-     }); 
+     }; 
   }
+  // {"hasToken": false, "method": "POST", "status": 404}
   
   return { status: 200, user };
 }
