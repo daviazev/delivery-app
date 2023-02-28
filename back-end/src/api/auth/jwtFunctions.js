@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { getUserByEmail } = require('../services/user.service')
+const { getUserByEmail } = require('../services/user.service');
 
 require('dotenv/config');
 
@@ -8,15 +8,17 @@ const secret = process.env.JWT_SECRET || 'secret';
 const validateJWT = async (req, res, next) => {
   const token = req.header('Authorization');
 
-  if (!token) throw ({
+  if (!token) {
+  throw new Error({
     status: 404,
-    message: "Token not found"
-  });
+    message: 'Token not found',
+  }); 
+} 
 
   try {
     const decoded = jwt.verify(token, secret);
 
-    const email = decoded.data.email
+    const { email } = decoded.data;
 
     const user = await getUserByEmail(email);
 

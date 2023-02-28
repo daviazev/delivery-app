@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { checkEmailAndPassword } from '../utils/checkUser';
 import loginApi from '../axios/config';
 // import '../styles/login.css';
@@ -7,9 +8,12 @@ import loginApi from '../axios/config';
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
   const [isDisable, setIsDisable] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const handleChange = ({ target: { name, value } }) => {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const validateForm = () => {
@@ -26,8 +30,18 @@ export default function Login() {
   const login = async (event) => {
     event.preventDefault();
     console.log('Logou', user);
-    const result = await loginApi.post('/login', user);
-    console.log(result);
+    try {
+      const result = await loginApi.post('/login', user);
+      const { role } = result.data;
+      console.log(role);
+      if (role === 'customer') {
+        navigate('/customer/products');
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error.message);
+      console.error(error);
+    }
   };
 
   return (
@@ -58,19 +72,20 @@ export default function Login() {
         >
           Login
         </button>
-        <Link
+        <button
           className="link"
-          to="/register"
+          type="submit"
           data-testid="common_login__button-register"
+          onClick={ () => navigate('/register') }
         >
           Ainda não tenho conta
-        </Link>
+        </button>
       </form>
       <span
         className="loginError"
         data-testid="common_login__element-invalid-email"
       >
-        Error Message
+        {errorMessage}
       </span>
     </section>
   );
