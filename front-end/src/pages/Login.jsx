@@ -38,7 +38,7 @@ export default function Login() {
         navigate('/customer/products');
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setErrorMessage(error.message);
       console.error(error);
     }

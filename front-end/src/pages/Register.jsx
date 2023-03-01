@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
+import loginApi from '../axios/config';
 // import '../styles/register.css';
 
 export default function Register() {
-  const [user, setUser] = useState({ email: '', username: '', password: '' });
+  const [user, setUser] = useState({ email: '', name: '', password: '' });
   const [isDisable, setIsDisable] = useState(true);
+  const [isVisible, setIsVisible] = useState('hidden');
 
   const handleChange = ({ target: { name, value } }) => {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const register = (event) => {
+  const navigate = useNavigate();
+
+  const register = async (event) => {
     event.preventDefault();
-    console.log('Registrou');
+    // console.log('Registrou', user);
+    try {
+      const result = await loginApi.post('/register', user);
+      console.log(result);
+      const STATUS_CREATED = 201;
+      // const STATUS_ERROR = 409;
+      if (result.status === STATUS_CREATED && result.data.role === 'customer') {
+        navigate('/customer/products');
+      }
+      // if (result.status === STATUS_ERROR) setIsVisible('visible');
+    } catch (error) {
+      console.error(error);
+      setIsVisible('visible');
+    }
   };
 
   useEffect(() => {
     const validateForm = () => {
-      const { email, password, username } = user;
+      const { email, password, name } = user;
       const check1 = Object.values(user).every((key) => key);
       const check2 = checkEmailAndPassword(email, password);
-      const check3 = checkUser(username);
+      const check3 = checkUser(name);
       if (check1 && check2 && check3) {
         setIsDisable(false);
       } else {
@@ -37,10 +55,10 @@ export default function Register() {
         <input
           className="inputRegister"
           type="text"
-          name="username"
+          name="name"
           placeholder="Seu Nome"
           onChange={ handleChange }
-          value={ user.username }
+          value={ user.name }
           data-testid="common_register__input-name"
         />
         <input
@@ -72,9 +90,10 @@ export default function Register() {
       </form>
       <span
         className="registerError"
-        data-testid="common_login__element-invalid-email"
+        data-testid="common_register__element-invalid_register"
+        style={ { visibility: isVisible } }
       >
-        Error Message
+        User already exists
       </span>
     </section>
 
