@@ -32,6 +32,7 @@ export default function Login() {
     console.log('Logou', user);
     try {
       const result = await loginApi.post('/login', user);
+      localStorage.setItem('user', JSON.stringify(result.data));
       const { role } = result.data;
       console.log(role);
       if (role === 'customer') {
