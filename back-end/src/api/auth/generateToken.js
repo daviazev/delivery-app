@@ -1,7 +1,7 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
-const jwtKey = require("fs")
-  .readFileSync('../back-end/jwt.evaluation.key', { encoding: "utf-8" });
+const jwtKey = require('fs')
+  .readFileSync('../back-end/jwt.evaluation.key', { encoding: 'utf-8' });
 
 const generateToken = (email, password) => {
   const jwtConfig = {
