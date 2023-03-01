@@ -16,9 +16,19 @@ async function login(req, res, _next) {
   } catch (error) {
     console.warn(error);
     return error;
-    // next(error);
-    // return res.json({"hasToken": false, "method": "POST", "status": 404});
   }
 }
 
-module.exports = { login };
+async function register(req, res) {
+  console.log(req.body);
+  try {
+    const result = await userService.register(req.body);
+    // console.log('controller', result);
+    return res.status(201).json(result);
+  } catch (error) {
+    console.warn(error);
+    return res.send(error);
+  }
+}
+
+module.exports = { login, register };
