@@ -6,6 +6,10 @@ export default function Products() {
   useEffect(() => {
     async function getProducts() {
       const response = await loginApi.get('/products');
+      // const formatPrice = response.data.map((element) => {
+      //   const newPrice = element.price.replace('.', ',');
+      //   return newPrice;
+      // });
       setProducts(response.data);
     }
     getProducts();
@@ -23,8 +27,8 @@ export default function Products() {
     <section>
       <h2>PRODUTOS</h2>
       <div>
-        {products.map((product) => (
-          <div key={ product.id }>
+        {products.map((product, index) => (
+          <div key={ index }>
             <h3
               data-testid={ `customer_products__element-card-title-${product.id}` }
             >
@@ -39,7 +43,7 @@ export default function Products() {
             <p
               data-testid={ `customer_products__element-card-price-${product.id}` }
             >
-              { product.price }
+              { product.price.replace('.', ',') }
 
             </p>
             <button
