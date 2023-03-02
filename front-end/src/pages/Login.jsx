@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import { checkEmailAndPassword } from '../utils/checkUser';
 import loginApi from '../axios/config';
 // import '../styles/login.css';
@@ -36,13 +35,12 @@ export default function Login() {
 
   const login = async (event) => {
     event.preventDefault();
-    console.log('Logou', user);
     try {
-      const result = await loginApi.post('/login', user);
-      const { role } = result.data;
-      navigate(translate[role]);
-    } catch (error) {
-      setErrorMessage(error.message);
+      const { data } = await loginApi.post('/login', user);
+      localStorage.setItem('user', JSON.stringify(data));
+      navigate(translate[data.role]);
+    } catch ({ response: { data: { message } } }) {
+      setErrorMessage(message);
     }
   };
 

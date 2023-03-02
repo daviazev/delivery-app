@@ -6,11 +6,11 @@ async function login(req, res, _next) {
 
   try {
     const user = await userService.login(email, password);
-    console.log(user);
+    console.log('==>', user);
     if (user.status === 200) {
       const token = generateToken(email, password);
-      const { role } = user.user.dataValues;
-      return res.status(200).json({ token, role });
+      const { role, name } = user.user.dataValues;
+      return res.status(200).json({ token, role, email, name });
     }
     return res.status(user.status).json({ message: user.message });
   } catch (error) {

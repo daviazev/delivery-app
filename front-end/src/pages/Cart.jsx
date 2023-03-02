@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import '../styles/cart.css';
 
 export default function Cart() {
+  const TIME = 3000;
   const [arrMock, setArrMock] = useState([
     {
       product: 'cerveja',
@@ -23,14 +26,30 @@ export default function Cart() {
     },
   ]);
 
+  const [isFinish, setIsFinish] = useState(false);
+
+  const navigate = useNavigate();
+
   const removeProduct = (index) => {
     const arrTest = [...arrMock];
     arrTest.splice(index, 1);
     setArrMock(arrTest);
   };
 
+  if (isFinish) {
+    setTimeout(() => navigate('/customer/details'), TIME);
+    return (
+      <section>
+        <h1>
+          <strong>Compra realizada com sucesso!</strong>
+        </h1>
+      </section>
+    );
+  }
+
   return (
     <section>
+      <Navbar />
       <h1>Finalizar Pedido</h1>
       <table className="table">
         <thead>
@@ -128,9 +147,9 @@ export default function Cart() {
         <button
           type="button"
           data-testid="customer_checkout__button-submit-order"
+          onClick={ () => setIsFinish(true) }
         >
           FINALIZAR PRODUTO
-
         </button>
       </form>
     </section>
