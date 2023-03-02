@@ -9,6 +9,12 @@ export default function Register() {
   const [isDisable, setIsDisable] = useState(true);
   const [isVisible, setIsVisible] = useState('hidden');
 
+  const translate = {
+    administrator: '/administrator/products',
+    seller: '/seller/products',
+    customer: '/customer/products',
+  };
+
   const handleChange = ({ target: { name, value } }) => {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -17,16 +23,10 @@ export default function Register() {
 
   const register = async (event) => {
     event.preventDefault();
-    // console.log('Registrou', user);
     try {
-      const result = await loginApi.post('/register', user);
-      console.log(result);
-      const STATUS_CREATED = 201;
-      // const STATUS_ERROR = 409;
-      if (result.status === STATUS_CREATED && result.data.role === 'customer') {
-        navigate('/customer/products');
-      }
-      // if (result.status === STATUS_ERROR) setIsVisible('visible');
+      const { data } = await loginApi.post('/register', user);
+      localStorage.setItem('user', JSON.stringify(data));
+      navigate(translate[data.role]);
     } catch (error) {
       console.error(error);
       setIsVisible('visible');
