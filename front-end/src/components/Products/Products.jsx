@@ -6,8 +6,7 @@ import RenderProducts from './RenderProducts';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-
-  const a = 99.90;
+  const [subTotal, setSubTotal] = useState(0);
 
   useEffect(() => {
     async function getProducts() {
@@ -32,6 +31,8 @@ export default function Products() {
             name={ name }
             urlImage={ urlImage }
             price={ price }
+            subTotal={ subTotal }
+            setSubTotal={ setSubTotal }
           />
         ))}
 
@@ -39,8 +40,10 @@ export default function Products() {
           type="button"
           data-testid="customer_products__button-cart"
         >
+          VER CARRINHO: R$
+          {' '}
           <span data-testid="customer_products__checkout-bottom-value">
-            {`VER CARRINHO: R$ ${a}`}
+            {`${subTotal.replace('.', ',')}`}
           </span>
         </button>
       </div>

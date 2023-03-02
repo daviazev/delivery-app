@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function RenderProducts(
-  { name, urlImage, price, id },
+  { name, urlImage, price, id, setSubTotal, subTotal },
 ) {
   const [quantity, setQuantity] = useState(0);
-  const [newPrice, setNewPrice] = useState(`${price}`);
 
-  console.log(typeof id);
-
-  useEffect(() => {
-    if (quantity > 0) {
-      setNewPrice(`${(quantity * price).toFixed(2)}`);
-    }
-  }, [quantity]);
-
-  const increment = () => {
+  const increment = (value) => {
     setQuantity(quantity + 1);
+    const soma = Number(subTotal) + Number(value);
+    setSubTotal(soma.toFixed(2));
   };
 
-  const decrement = () => {
+  const decrement = (value) => {
     if (quantity <= 0) {
       return 0;
     }
 
     setQuantity(quantity - 1);
+    const sub = Number(subTotal) - Number(value);
+    setSubTotal(sub.toFixed(2));
   };
 
   const inputChange = ({ target }) => {
@@ -48,13 +43,13 @@ export default function RenderProducts(
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        { newPrice.replace('.', ',') }
+        { price.replace('.', ',') }
 
       </p>
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        onClick={ decrement }
+        onClick={ () => decrement(price) }
       >
         REMOVER
       </button>
@@ -67,7 +62,7 @@ export default function RenderProducts(
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        onClick={ increment }
+        onClick={ () => increment(price) }
       >
         ADICIONAR
       </button>
