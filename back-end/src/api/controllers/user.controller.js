@@ -23,7 +23,7 @@ async function register(req, res) {
   try {
     const result = await userService.register(req.body);
     const token = generateToken(email, password);
-    return res.status(201).json({...result, token});
+    return res.status(201).json({ ...result, token });
   } catch (error) {
     console.warn(error);
     return res.send(error);
