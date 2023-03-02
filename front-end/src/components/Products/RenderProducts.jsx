@@ -22,8 +22,12 @@ export default function RenderProducts(
     setSubTotal(sub.toFixed(2));
   };
 
-  const inputChange = ({ target }) => {
-    setQuantity(Number(target.value));
+  const inputChange = (event, valuePrice) => {
+    const { value } = event.target;
+    const soma = Number(subTotal) + Number(valuePrice) * value;
+    const toFixed2 = soma.toFixed(2);
+    setQuantity(value);
+    setSubTotal(String(toFixed2));
   };
 
   return (
@@ -57,7 +61,7 @@ export default function RenderProducts(
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
         value={ quantity }
-        onChange={ inputChange }
+        onChange={ (event) => inputChange(event, price) }
       />
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }

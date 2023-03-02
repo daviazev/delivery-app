@@ -43,7 +43,7 @@ export default function Products() {
           VER CARRINHO: R$
           {' '}
           <span data-testid="customer_products__checkout-bottom-value">
-            {`${subTotal.replace('.', ',')}`}
+            {subTotal && `${subTotal?.replace('.', ',')}`}
           </span>
         </button>
       </div>
