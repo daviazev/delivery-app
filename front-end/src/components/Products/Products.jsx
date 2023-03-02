@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
 import api from '../../axios/config';
 import Loading from '../Loading';
 
@@ -7,6 +10,14 @@ import RenderProducts from './RenderProducts';
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+  const [isDisable, setIsDisable] = useState(true);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsDisable(Number(subTotal) === 0);
+    console.log(Number(subTotal) === 0);
+  }, [subTotal]);
 
   useEffect(() => {
     async function getProducts() {
@@ -15,6 +26,10 @@ export default function Products() {
     }
     getProducts();
   }, []);
+
+  const customerCheckout = () => {
+    navigate('/customer/checkout');
+  };
 
   if (products.length === 0) {
     return <Loading />;
@@ -39,6 +54,8 @@ export default function Products() {
         <button
           type="button"
           data-testid="customer_products__button-cart"
+          onClick={ () => customerCheckout() }
+          disabled={ isDisable }
         >
           VER CARRINHO: R$
           {' '}
