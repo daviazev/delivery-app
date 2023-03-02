@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CustomerProducts from './pages/CustomerProducts';
+import AdministratorProducts from './pages/AdministratorProducts';
+import SellerProducts from './pages/SellerProducts';
+import Cart from './pages/Cart';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -12,6 +16,10 @@ export default function App() {
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/customer/products" element={ <CustomerProducts /> } />
+        <Route path="/customer/products" element={ <AdministratorProducts /> } />
+        <Route path="/customer/products" element={ <SellerProducts /> } />
+        <Route path="/customer/checkout" element={ <Cart /> } />
+        <Route path="*" element={ <NotFound /> } />
       </Routes>
     </Router>
   );

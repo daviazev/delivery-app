@@ -9,6 +9,13 @@ export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
   const [isDisable, setIsDisable] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const translate = {
+    administrator: '/administrator/products',
+    seller: '/seller/products',
+    customer: '/customer/products',
+  };
+
   const handleChange = ({ target: { name, value } }) => {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -33,14 +40,9 @@ export default function Login() {
     try {
       const result = await loginApi.post('/login', user);
       const { role } = result.data;
-      console.log(role);
-      if (role === 'customer') {
-        navigate('/customer/products');
-      }
+      navigate(translate[role]);
     } catch (error) {
-      // console.log(error);
       setErrorMessage(error.message);
-      console.error(error);
     }
   };
 
