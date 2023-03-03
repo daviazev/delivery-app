@@ -16,20 +16,20 @@ export default function Navbar() {
   };
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
-          <li
-            data-testid="customer_products__element-navbar-link-orders"
-          >
-            MEUS PEDIDOS
-          </li>
-          <li
-            data-testid="customer_products__element-navbar-user-full-name"
-          >
-            {user.name}
-          </li>
+    <header>
+      <ul>
+        <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
+        <li
+          data-testid="customer_products__element-navbar-link-orders"
+        >
+          MEUS PEDIDOS
+        </li>
+        <li
+          data-testid="customer_products__element-navbar-user-full-name"
+        >
+          {user.name}
+        </li>
+        <nav>
           <button
             type="button"
             onClick={ () => logout() }
@@ -37,8 +37,8 @@ export default function Navbar() {
           >
             SAIR
           </button>
-        </ul>
-      </nav>
-    </div>
+        </nav>
+      </ul>
+    </header>
   );
 }
