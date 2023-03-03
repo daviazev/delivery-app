@@ -10,7 +10,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const translate = {
-    administrator: '/administrator/products',
+    administrator: '/admin/manage',
     seller: '/seller/products',
     customer: '/customer/products',
   };

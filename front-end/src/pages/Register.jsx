@@ -5,7 +5,9 @@ import loginApi from '../axios/config';
 // import '../styles/register.css';
 
 export default function Register() {
-  const [user, setUser] = useState({ email: '', name: '', password: '' });
+  const [user, setUser] = useState({
+    email: '', name: '', password: '', role: 'customer',
+  });
   const [isDisable, setIsDisable] = useState(true);
   const [isVisible, setIsVisible] = useState('hidden');
 

@@ -59,6 +59,7 @@ export default function Products() {
             setSubTotal={ setSubTotal }
             localStorageProducts={ localStorageProducts }
             setLocalStorageProducts={ setLocalStorageProducts }
+            setInLocalStorage={ setInLocalStorage }
           />
         ))}
 
