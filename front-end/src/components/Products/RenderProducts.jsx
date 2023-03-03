@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function RenderProducts(
-  { name, urlImage, price, id, setSubTotal, subTotal },
+  { name, urlImage, price, id, setSubTotal, subTotal,
+    localStorageProducts, setLocalStorageProducts },
 ) {
   const [quantity, setQuantity] = useState(0);
 
-  const increment = (value) => {
+  useEffect(() => {
+    localStorage.setItem('products', JSON.stringify(localStorageProducts));
+  }, [localStorageProducts]);
+
+  const increment = (value, productId) => {
     setQuantity(quantity + 1);
     const soma = Number(subTotal) + Number(value);
     setSubTotal(soma.toFixed(2));
+
+    const qty = quantity;
+
+    const product = { name, price, id, quantity: qty + 1 };
+
+    const existingProducts = localStorageProducts.find((p) => p.id === productId);
+
+    if (existingProducts) existingProducts.quantity += 1;
+    else localStorageProducts.push(product);
+
+    setLocalStorageProducts([...localStorageProducts]);
   };
 
-  const decrement = (value) => {
+  const decrement = (value, productId) => {
     if (quantity <= 0) {
       return 0;
     }
@@ -20,6 +36,18 @@ export default function RenderProducts(
     setQuantity(quantity - 1);
     const sub = Number(subTotal) - Number(value);
     setSubTotal(sub.toFixed(2));
+
+    const existingProducts = localStorageProducts.find((p) => p.id === productId);
+
+    if (existingProducts) existingProducts.quantity -= 1;
+
+    if (existingProducts.quantity === 0) {
+      const storage = JSON.parse(localStorage.getItem('products'));
+      const removeProduct = storage.filter((element) => element.id !== productId);
+      return setLocalStorageProducts([...removeProduct]);
+    }
+
+    setLocalStorageProducts([...localStorageProducts]);
   };
 
   const inputChange = (event, valuePrice) => {
@@ -53,7 +81,7 @@ export default function RenderProducts(
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        onClick={ () => decrement(price) }
+        onClick={ () => decrement(price, id) }
       >
         REMOVER
       </button>
@@ -66,7 +94,7 @@ export default function RenderProducts(
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        onClick={ () => increment(price) }
+        onClick={ () => increment(price, id) }
       >
         ADICIONAR
       </button>

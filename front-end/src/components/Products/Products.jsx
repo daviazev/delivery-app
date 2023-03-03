@@ -11,12 +11,12 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [isDisable, setIsDisable] = useState(true);
+  const [localStorageProducts, setLocalStorageProducts] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsDisable(Number(subTotal) === 0);
-    console.log(Number(subTotal) === 0);
   }, [subTotal]);
 
   useEffect(() => {
@@ -48,6 +48,8 @@ export default function Products() {
             price={ price }
             subTotal={ subTotal }
             setSubTotal={ setSubTotal }
+            localStorageProducts={ localStorageProducts }
+            setLocalStorageProducts={ setLocalStorageProducts }
           />
         ))}
 
