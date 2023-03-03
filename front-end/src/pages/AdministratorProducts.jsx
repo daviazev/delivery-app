@@ -32,6 +32,7 @@ export default function AdministratorProducts() {
   }, [user]);
 
   const postUser = async () => {
+    // event.preventDefault();
     try {
       const { data } = await api.post('/admin/manage', user);
       console.log(data);
@@ -100,7 +101,7 @@ export default function AdministratorProducts() {
         CADASTRAR
 
       </button>
-      <span>{errorMessage}</span>
+      <span data-testid="admin_manage__element-invalid-register">{errorMessage}</span>
     </div>
   );
 }

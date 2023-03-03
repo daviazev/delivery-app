@@ -21,6 +21,11 @@ async function getUserByEmail(email) {
   return user;
 }
 
+async function getUserByName(name) {
+  const user = await User.findOne({ where: { name } });
+  return user;
+}
+
 async function register({ email, password, name, role }) {
   const pswHash = md5(password);
   const result = await User.create({ email, password: pswHash, name, role });
@@ -38,4 +43,4 @@ const findByRole = async (role) => {
  return { status: 200, message: result };
 };
 
-module.exports = { login, getUserByEmail, register, findByRole };
+module.exports = { login, getUserByEmail, register, findByRole, getUserByName };

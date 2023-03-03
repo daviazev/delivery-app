@@ -20,6 +20,8 @@ export default function RenderProducts(
     else localStorageProducts.push(product);
 
     setLocalStorageProducts([...localStorageProducts]);
+
+    setInLocalStorage([...localStorageProducts]);
   };
 
   // aproveita a função para remover o produto ou diminuir sua quantidade no localStorage
@@ -42,6 +44,8 @@ export default function RenderProducts(
     }
 
     setLocalStorageProducts([...localStorageProducts]);
+
+    setInLocalStorage([...localStorageProducts]);
   };
 
   // aproveita a função para adicionar o produto ou aumentar sua quantidade no localStorage
@@ -49,7 +53,7 @@ export default function RenderProducts(
 
   const inputChange = (event, valuePrice, productId) => {
     const { value } = event.target;
-    const soma = Number(subTotal) + Number(valuePrice) * value;
+    const soma = Number(subTotal) + Number(valuePrice) * Number(value);
     const toFixed2 = soma.toFixed(2);
     setQuantity(value);
     setSubTotal(String(toFixed2));
