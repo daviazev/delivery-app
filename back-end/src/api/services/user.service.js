@@ -24,8 +24,8 @@ async function getUserByEmail(email) {
 async function register({ email, password, name }) {
   const pswHash = md5(password);
   const result = await User.create({ email, password: pswHash, name, role: 'customer' });
-  // console.log('service', result);
-  return result;
+  const { id: _id, password: _password, ...resto } = result.dataValues;
+  return resto;
 }
 
 module.exports = { login, getUserByEmail, register };

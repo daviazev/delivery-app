@@ -6,7 +6,6 @@ async function login(req, res, _next) {
 
   try {
     const user = await userService.login(email, password);
-    console.log('==>', user);
     if (user.status === 200) {
       const token = generateToken(email, password);
       const { role, name } = user.user.dataValues;
@@ -20,11 +19,11 @@ async function login(req, res, _next) {
 }
 
 async function register(req, res) {
-  console.log(req.body);
+   const { email, password } = req.body;
   try {
     const result = await userService.register(req.body);
-    // console.log('controller', result);
-    return res.status(201).json(result);
+    const token = generateToken(email, password);
+    return res.status(201).json({ ...result, token });
   } catch (error) {
     console.warn(error);
     return res.send(error);
