@@ -13,13 +13,13 @@ const adminRegisterValidation = async (req, res, next) => {
   const { email, name } = req.body;
 
   const emailExists = await getUserByEmail(email);
-  const nameExists = await getUserByName(name)
+  const nameExists = await getUserByName(name);
 
   if (emailExists || nameExists) {
     return res.status(409).json({ message: 'User already exists' });
   }
 
-  next()
-}
+  next();
+};
 
 module.exports = { registerValidation, adminRegisterValidation };
