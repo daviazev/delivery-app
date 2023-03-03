@@ -13,7 +13,15 @@ export default function Products() {
   const [isDisable, setIsDisable] = useState(true);
   const [localStorageProducts, setLocalStorageProducts] = useState([]);
 
+  useEffect(() => {
+    localStorage.setItem('products', JSON.stringify(localStorageProducts));
+  }, []);
+
   const navigate = useNavigate();
+
+  const setInLocalStorage = () => {
+    localStorage.setItem('products', JSON.stringify(localStorageProducts));
+  };
 
   useEffect(() => {
     setIsDisable(Number(subTotal) === 0);
@@ -29,6 +37,7 @@ export default function Products() {
 
   const customerCheckout = () => {
     navigate('/customer/checkout');
+    setInLocalStorage();
   };
 
   if (products.length === 0) {

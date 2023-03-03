@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function RenderProducts(
@@ -7,19 +7,13 @@ export default function RenderProducts(
 ) {
   const [quantity, setQuantity] = useState(0);
 
-  useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(localStorageProducts));
-  }, [localStorageProducts]);
-
   const increment = (value, productId) => {
     setQuantity(quantity + 1);
     const soma = Number(subTotal) + Number(value);
     setSubTotal(soma.toFixed(2));
 
-    const qty = quantity;
-
-    const product = { name, price, id, quantity: qty + 1 };
-
+    // aproveita a função para adicionar o produto ou aumentar sua quantidade no localStorage
+    const product = { name, price, id, quantity: quantity + 1 };
     const existingProducts = localStorageProducts.find((p) => p.id === productId);
 
     if (existingProducts) existingProducts.quantity += 1;
@@ -28,6 +22,7 @@ export default function RenderProducts(
     setLocalStorageProducts([...localStorageProducts]);
   };
 
+  // aproveita a função para remover o produto ou diminuir sua quantidade no localStorage
   const decrement = (value, productId) => {
     if (quantity <= 0) {
       return 0;
@@ -38,7 +33,6 @@ export default function RenderProducts(
     setSubTotal(sub.toFixed(2));
 
     const existingProducts = localStorageProducts.find((p) => p.id === productId);
-
     if (existingProducts) existingProducts.quantity -= 1;
 
     if (existingProducts.quantity === 0) {
@@ -50,12 +44,31 @@ export default function RenderProducts(
     setLocalStorageProducts([...localStorageProducts]);
   };
 
-  const inputChange = (event, valuePrice) => {
+  // aproveita a função para adicionar o produto ou aumentar sua quantidade no localStorage
+  // usando o valor inserido pelo o usuário
+
+  const inputChange = (event, valuePrice, productId) => {
     const { value } = event.target;
     const soma = Number(subTotal) + Number(valuePrice) * value;
     const toFixed2 = soma.toFixed(2);
     setQuantity(value);
     setSubTotal(String(toFixed2));
+
+    const existingProducts = localStorageProducts.find((p) => p.id === productId);
+
+    if (existingProducts) {
+      existingProducts.quantity = Number(value);
+    } else {
+      const newProduct = {
+        name,
+        price: valuePrice,
+        id: productId,
+        quantity: Number(value),
+      };
+      localStorageProducts.push(newProduct);
+    }
+
+    setLocalStorageProducts([...localStorageProducts]);
   };
 
   return (
@@ -89,7 +102,7 @@ export default function RenderProducts(
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
         value={ quantity }
-        onChange={ (event) => inputChange(event, price) }
+        onChange={ (event) => inputChange(event, price, id) }
       />
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
