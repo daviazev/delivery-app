@@ -6,11 +6,8 @@ const postSales = async (body) => {
   if (!data) return { status: 400, message: 'Cannot post sale' };
   const { dataValues } = data;
   const { id: saleId } = dataValues;
-  console.log('saleId', saleId);
   await Promise.all(products.map(async ({ productId, quantity }) => {
-    console.log('product id e quantity');
-    console.log(productId, quantity);
-    const result = await SalesProduct.create(saleId, productId, quantity);
+    const result = await SalesProduct.create({ saleId, productId, quantity });
     return result;
   }));
   return { status: 201, message: dataValues };
