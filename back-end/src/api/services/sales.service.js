@@ -12,7 +12,7 @@ const postSales = async (body) => {
     console.log(productId, quantity);
     const result = await SalesProduct.create(saleId, productId, quantity);
     return result;
-  }))
+  }));
   return { status: 201, message: dataValues };
 };
 

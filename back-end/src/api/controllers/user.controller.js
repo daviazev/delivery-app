@@ -33,6 +33,6 @@ async function register(req, res) {
 const findByRole = async (req, res) => {
   const { status, message } = await userService.findByRole(req.query.q);
   return res.status(status).json(message);
-}
+};
 
 module.exports = { login, register, findByRole };

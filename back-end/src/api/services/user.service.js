@@ -28,14 +28,14 @@ async function register({ email, password, name }) {
   return resto;
 }
 
-const findByRole =  async (role) => {
- const data = await User.findAll({ where: { role }})
- if (!data.length) return { status: 400, message: { message: 'Cannot get role' } }
+const findByRole = async (role) => {
+ const data = await User.findAll({ where: { role } });
+ if (!data.length) return { status: 400, message: { message: 'Cannot get role' } };
  const result = data.map(({ dataValues }) => {
   const { password: _pass, ...dataWithotPass } = dataValues;
   return dataWithotPass;
  });
- return { status: 200, message: result }
-}
+ return { status: 200, message: result };
+};
 
 module.exports = { login, getUserByEmail, register, findByRole };
