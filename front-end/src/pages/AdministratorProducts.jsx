@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
+import api from '../axios/config';
 
 export default function AdministratorProducts() {
-  const [user, setUser] = useState({ email: '', name: '', password: '', role: '' });
+  const [user, setUser] = useState({
+    email: '', name: '', password: '', role: 'seller',
+  });
   const [isDisable, setIsDisable] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = ({ target: { name, value } }) => {
+    if (name === 'role') {
+      if (value === 'Cliente') {
+        return setUser((prevState) => ({ ...prevState, [name]: 'customer' }));
+      } if (value === 'Administrador') {
+        return setUser((prevState) => ({ ...prevState, [name]: 'administrator' }));
+      }
+      return setUser((prevState) => ({ ...prevState, [name]: 'seller' }));
+    }
+
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -17,6 +30,15 @@ export default function AdministratorProducts() {
     if (checkName && checkPasswordAndEmail) setIsDisable(false);
     else { setIsDisable(true); }
   }, [user]);
+
+  const postUser = async () => {
+    try {
+      const { data } = await api.post('/admin/manage', user);
+      console.log(data);
+    } catch (error) {
+      setErrorMessage('User already exists');
+    }
+  };
 
   return (
     <div>
@@ -73,10 +95,12 @@ export default function AdministratorProducts() {
         type="button"
         data-testid="admin_manage__button-register"
         disabled={ isDisable }
+        onClick={ postUser }
       >
         CADASTRAR
 
       </button>
+      <span>{errorMessage}</span>
     </div>
   );
 }
