@@ -10,6 +10,6 @@ const router = Router();
 router.post('/login', loginValidation, login);
 router.post('/register', registerValidation, register);
 router.get('/seller', validateUser, findByRole);
-router.post('/admin/manage', registerValidation, register)
+router.post('/admin/manage', registerValidation, register);
 
 module.exports = router;
