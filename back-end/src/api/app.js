@@ -13,8 +13,6 @@ app.use(cors());
 
 app.use('/images', express.static(`${__dirname}/../images`));
 
-console.log(__dirname);
-
 app.use(userRoutes);
 app.use(productRoutes);
 app.use(salesRoutes);

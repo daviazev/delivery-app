@@ -6,7 +6,6 @@ const loginValidation = (req, res, next) => {
   const validation = validateLoginField(email, password);
 
   const { message } = validation;
-  // console.log(validation);
   
   if (validation.type) {
     throw new Error({ status: 400, message });

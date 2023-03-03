@@ -6,48 +6,69 @@ import api from '../axios/config';
 import '../styles/cart.css';
 
 export default function Cart() {
-  const [arrMock, setArrMock] = useState([
-    {
-      product: 'cerveja',
-      description: 'bebida alcolica',
-      quantity: 123,
-      price: 99,
-    },
-    {
-      product: 'guanara',
-      description: 'bebida gaseficada',
-      quantity: 13,
-      price: 10,
-    },
-    {
-      product: 'agua',
-      description: 'liquido normal',
-      quantity: 1000,
-      price: 2.50,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
   const [isFinish, setIsFinish] = useState(false);
 
-  useEffect(() => localStorage.setItem('mock', JSON.stringify(arrMock)), []);
+  const [sellers, setSellers] = useState([]);
+
+  const [newSale, setNewSale] = useState({
+    userId: '',
+    sellerId: '1',
+    totalPrice: 0,
+    deliveryAddress: '',
+    deliveryNumber: '',
+    products: [],
+  });
+
+  useEffect(() => {
+    setProducts(JSON.parse(localStorage.getItem('products')));
+    const getSellers = async () => {
+      try {
+        const { data } = await api.get('/seller', { params: { q: 'seller' } });
+        setSellers(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSellers();
+  }, []);
+
+  useEffect(() => {
+    const setTotalProductPrice = () => {
+      if (products.length) {
+        setNewSale((prevState) => ({
+          ...prevState,
+          totalPrice: Number(calcTotalPrice(products).replace(',', '.')),
+          userId: localStorage.getItem('userId'),
+          products: products.map(({ id, quantity }) => ({ productId: id, quantity })),
+        }));
+      }
+    };
+    setTotalProductPrice();
+  }, [products]);
 
   const removeProduct = (index) => {
-    const arrTest = [...arrMock];
-    arrTest.splice(index, 1);
-    setArrMock(arrTest);
+    const newArr = [...products];
+    newArr.splice(index, 1);
+    setProducts(newArr);
   };
 
   const finishPurchase = async (event) => {
     event.preventDefault();
     setIsFinish(true);
     console.log('API');
-    const result = await api.post('/products', arrMock);
-    console.log(result);
+    const { data } = await api.post('/sales', newSale);
+    console.log(data);
+  };
+
+  const handleChange = ({ target: { name, value } }) => {
+    setNewSale((prevState) => ({ ...prevState, [name]: value }));
   };
 
   return (
     <section>
-      { isFinish ? (
+      {isFinish ? (
         <Countdown />
       ) : (
         <section>
@@ -57,7 +78,6 @@ export default function Cart() {
             <thead>
               <tr>
                 <th>Item</th>
-                <th>Produto</th>
                 <th>Descrição</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
@@ -66,7 +86,7 @@ export default function Cart() {
               </tr>
             </thead>
             <tbody>
-              {arrMock.map(({ product, description, quantity, price }, i) => (
+              {products.map(({ name, price, quantity }, i) => (
                 <tr key={ i }>
                   <td
                     data-testid={
@@ -80,9 +100,8 @@ export default function Cart() {
                       `customer_checkout__element-order-table-name-${i}`
                     }
                   >
-                    {product}
+                    {name}
                   </td>
-                  <td>{description}</td>
                   <td
                     data-testid={
                       `customer_checkout__element-order-table-quantity-${i}`
@@ -95,14 +114,15 @@ export default function Cart() {
                       `customer_checkout__element-order-table-unit-price-${i}`
                     }
                   >
-                    {`R$ ${price.toFixed(2).replace('.', ',')}`}
+                    {`R$ ${Number(price).toFixed(2).replace('.', ',')}`}
                   </td>
                   <td
                     data-testid={
                       `customer_checkout__element-order-table-sub-total-${i}`
                     }
                   >
-                    {`R$ ${(price * quantity).toFixed(2).replace('.', ',')}`}
+                    {`R$ ${(Number(price) * Number(quantity))
+                      .toFixed(2).replace('.', ',')}`}
                   </td>
                   <td>
                     <button
@@ -123,7 +143,7 @@ export default function Cart() {
           <h1
             data-testid="customer_checkout__element-order-total-price"
           >
-            { arrMock.length && `Total: R$ ${calcTotalPrice(arrMock)}`}
+            {products.length && `Total: R$ ${calcTotalPrice(products)}`}
           </h1>
           <h2>Detalhes e Endereço para Entrega</h2>
           <form onSubmit={ finishPurchase }>
@@ -131,9 +151,13 @@ export default function Cart() {
               P. Vendedora Responsável:
               <select
                 id="select"
+                name="sellerId"
                 data-testid="customer_checkout__select-seller"
+                onChange={ handleChange }
               >
-                <option>Fulana Pereira</option>
+                {sellers.map(({ name, id }, index) => (
+                  <option key={ index } value={ id }>{name}</option>
+                ))}
               </select>
             </label>
             <label htmlFor="address">
@@ -142,7 +166,9 @@ export default function Cart() {
                 type="text"
                 id="address"
                 placeholder="Digite seu Endereço"
+                name="deliveryAddress"
                 data-testid="customer_checkout__input-address"
+                onChange={ handleChange }
               />
             </label>
             <label htmlFor="houseNumber">
@@ -150,7 +176,9 @@ export default function Cart() {
               <input
                 type="number"
                 id="houseNumber"
+                name="deliveryNumber"
                 data-testid="customer_checkout__input-address-number"
+                onChange={ handleChange }
               />
             </label>
             <button

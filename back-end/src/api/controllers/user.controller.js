@@ -8,8 +8,8 @@ async function login(req, res, _next) {
     const user = await userService.login(email, password);
     if (user.status === 200) {
       const token = generateToken(email, password);
-      const { role, name } = user.user.dataValues;
-      return res.status(200).json({ token, role, email, name });
+      const { role, name, id } = user.user.dataValues;
+      return res.status(200).json({ token, role, email, name, id });
     }
     return res.status(user.status).json({ message: user.message });
   } catch (error) {
@@ -30,4 +30,9 @@ async function register(req, res) {
   }
 }
 
-module.exports = { login, register };
+const findByRole = async (req, res) => {
+  const { status, message } = await userService.findByRole(req.query.q);
+  return res.status(status).json(message);
+}
+
+module.exports = { login, register, findByRole };

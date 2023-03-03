@@ -3,9 +3,9 @@ import Navbar from '../components/Navbar';
 import calcTotalPrice from '../utils/calcTotalPrice';
 
 export default function Details() {
-  const [arrMock, setArrMock] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  useEffect(() => setArrMock(JSON.parse(localStorage.getItem('mock'))), []);
+  useEffect(() => setProducts(JSON.parse(localStorage.getItem('products'))), []);
 
   return (
     <section>
@@ -23,14 +23,13 @@ export default function Details() {
           <tr>
             <th>Item</th>
             <th>Produto</th>
-            <th>Descrição</th>
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
           </tr>
         </thead>
         <tbody>
-          {arrMock.map(({ product, description, quantity, price }, i) => (
+          {products.map(({ name, price, quantity }, i) => (
             <tr key={ i }>
               <td
                 data-testid={ `customer_checkout__element-order-table-item-number-${i}` }
@@ -40,9 +39,8 @@ export default function Details() {
               <td
                 data-testid={ `customer_checkout__element-order-table-name-${i}` }
               >
-                {product}
+                {name}
               </td>
-              <td>{description}</td>
               <td
                 data-testid={ `customer_checkout__element-order-table-quantity-${i}` }
               >
@@ -51,18 +49,18 @@ export default function Details() {
               <td
                 data-testid={ `customer_checkout__element-order-table-unit-price-${i}` }
               >
-                {`R$ ${price.toFixed(2).replace('.', ',')}`}
+                {`R$ ${Number(price).toFixed(2).replace('.', ',')}`}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-sub-total-${i}` }
               >
-                {`R$ ${(price * quantity).toFixed(2).replace('.', ',')}`}
+                {`R$ ${(Number(price) * Number(quantity)).toFixed(2).replace('.', ',')}`}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      { arrMock.length && `Total: R$ ${calcTotalPrice(arrMock)}`}
+      { products.length && `Total: R$ ${calcTotalPrice(products)}`}
     </section>
   );
 }
