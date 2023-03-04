@@ -21,6 +21,8 @@ export default function Cart() {
     products: [],
   });
 
+  const [sallesApi, setSallesApi] = useState({});
+
   useEffect(() => {
     setProducts(JSON.parse(localStorage.getItem('products')));
     const getSellers = async () => {
@@ -56,10 +58,11 @@ export default function Cart() {
 
   const finishPurchase = async (event) => {
     event.preventDefault();
-    setIsFinish(true);
-    console.log('API');
     const { data } = await api.post('/sales', newSale);
-    console.log(data);
+    console.log('API', data);
+    // Anotação: remover setSallesApi e fazer uma api get dentro do Countdown para buscar o id venda criada
+    setSallesApi(data);
+    setIsFinish(true);
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -69,7 +72,7 @@ export default function Cart() {
   return (
     <section>
       {isFinish ? (
-        <Countdown />
+        <Countdown saleId={ sallesApi.id } />
       ) : (
         <section>
           <Navbar />
@@ -78,6 +81,7 @@ export default function Cart() {
             <thead>
               <tr>
                 <th>Item</th>
+                <th>productId</th>
                 <th>Descrição</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
@@ -86,7 +90,7 @@ export default function Cart() {
               </tr>
             </thead>
             <tbody>
-              {products.map(({ name, price, quantity }, i) => (
+              {products.map(({ name, price, quantity, id }, i) => (
                 <tr key={ i }>
                   <td
                     data-testid={
@@ -95,6 +99,7 @@ export default function Cart() {
                   >
                     {i + 1}
                   </td>
+                  <td>{id}</td>
                   <td
                     data-testid={
                       `customer_checkout__element-order-table-name-${i}`
@@ -114,14 +119,14 @@ export default function Cart() {
                       `customer_checkout__element-order-table-unit-price-${i}`
                     }
                   >
-                    {`R$ ${Number(price).toFixed(2).replace('.', ',')}`}
+                    {`${Number(price).toFixed(2).replace('.', ',')}`}
                   </td>
                   <td
                     data-testid={
                       `customer_checkout__element-order-table-sub-total-${i}`
                     }
                   >
-                    {`R$ ${(Number(price) * Number(quantity))
+                    {`${(Number(price) * Number(quantity))
                       .toFixed(2).replace('.', ',')}`}
                   </td>
                   <td>

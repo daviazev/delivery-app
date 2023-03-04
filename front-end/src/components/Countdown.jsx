@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import propTypes from 'prop-types';
 
-export default function Countdown() {
+export default function Countdown({ saleId }) {
   const COUNT = 3;
   const [countdown, setCountdown] = useState(COUNT);
   const intervalRef = useRef(null);
@@ -9,7 +10,7 @@ export default function Countdown() {
   const TIME = 1000;
 
   useEffect(() => {
-    if (countdown <= 0) navigate('/customer/orders/1');
+    if (countdown <= 0) navigate(`/customer/orders/${saleId}`);
   }, [countdown]);
 
   useEffect(() => {
@@ -28,3 +29,7 @@ export default function Countdown() {
     </section>
   );
 }
+
+Countdown.propTypes = {
+  saleId: propTypes.number.isRequired,
+};

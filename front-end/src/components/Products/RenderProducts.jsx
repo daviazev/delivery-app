@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function RenderProducts(
   { name, urlImage, price, id, setSubTotal, subTotal,
-    localStorageProducts, setLocalStorageProducts },
+    localStorageProducts, setLocalStorageProducts, setInLocalStorage },
 ) {
   const [quantity, setQuantity] = useState(0);
 
@@ -20,6 +20,7 @@ export default function RenderProducts(
     else localStorageProducts.push(product);
 
     setLocalStorageProducts([...localStorageProducts]);
+    setInLocalStorage([...localStorageProducts]);
   };
 
   // aproveita a função para remover o produto ou diminuir sua quantidade no localStorage
@@ -42,6 +43,7 @@ export default function RenderProducts(
     }
 
     setLocalStorageProducts([...localStorageProducts]);
+    setInLocalStorage([...localStorageProducts]);
   };
 
   // aproveita a função para adicionar o produto ou aumentar sua quantidade no localStorage
