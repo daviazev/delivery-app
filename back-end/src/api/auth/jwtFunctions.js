@@ -1,10 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { getUserByEmail } = require('../services/user.service');
-
-require('dotenv/config');
-
 const jwtKey = require('fs')
   .readFileSync('../back-end/jwt.evaluation.key', { encoding: 'utf-8' });
+const { getUserByEmail } = require('../services/user.service');
 
 const validateJWT = async (req, res, next) => {
   const token = req.header('Authorization');
