@@ -3,24 +3,13 @@ import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
 import api, { setToken } from '../axios/config';
 
 export default function AdministratorProducts() {
-  const [user, setUser] = useState({
-    email: '', name: '', password: '', role: 'seller',
-  });
-  const [isDisable, setIsDisable] = useState(true);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('seller');
+
+  const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const handleChange = ({ target: { name, value } }) => {
-    if (name === 'role') {
-      if (value === 'Cliente') {
-        return setUser((prevState) => ({ ...prevState, [name]: 'customer' }));
-      } if (value === 'Administrador') {
-        return setUser((prevState) => ({ ...prevState, [name]: 'administrator' }));
-      }
-      return setUser((prevState) => ({ ...prevState, [name]: 'seller' }));
-    }
-
-    setUser((prevState) => ({ ...prevState, [name]: value }));
-  };
 
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('user'));
@@ -28,16 +17,15 @@ export default function AdministratorProducts() {
   }, []);
 
   useEffect(() => {
-    const { email, password, name } = user;
     const checkPasswordAndEmail = checkEmailAndPassword(email, password);
     const checkName = checkUser(name);
 
-    if (checkName && checkPasswordAndEmail) setIsDisable(false);
-    else { setIsDisable(true); }
-  }, [user]);
+    if (checkName && checkPasswordAndEmail) setIsDisabled(false);
+    else { setIsDisabled(true); }
+  }, [name, email, password, role]);
 
-  const postUser = async () => {
-    // event.preventDefault();
+  const registerUser = async () => {
+    const user = { name, email, password, role };
     try {
       const { data } = await api.post('/admin/manage', user);
       console.log(data);
@@ -70,39 +58,40 @@ export default function AdministratorProducts() {
         <input
           data-testid="admin_manage__input-name"
           type="text"
-          onChange={ handleChange }
+          onChange={ (e) => setName(e.target.value) }
           placeholder="Nome e sobrenome"
           name="name"
         />
         <input
           type="email"
           data-testid="admin_manage__input-email"
-          onChange={ handleChange }
+          onChange={ (e) => setEmail(e.target.value) }
           placeholder="Email"
           name="email"
         />
         <input
           type="password"
           data-testid="admin_manage__input-password"
-          onChange={ handleChange }
+          onChange={ (e) => setPassword(e.target.value) }
           placeholder="password"
           name="password"
         />
         <select
-          onChange={ handleChange }
+          value={ role }
+          onChange={ (e) => setRole(e.target.value) }
           data-testid="admin_manage__select-role"
           name="role"
         >
-          <option>Vendedor</option>
-          <option>Cliente</option>
-          <option>Administrador</option>
+          <option value="seller">Vendedor</option>
+          <option value="customer">Cliente</option>
+          <option value="administrator">Administrador</option>
         </select>
       </section>
       <button
         type="button"
         data-testid="admin_manage__button-register"
-        disabled={ isDisable }
-        onClick={ postUser }
+        disabled={ isDisabled }
+        onClick={ registerUser }
       >
         CADASTRAR
 
