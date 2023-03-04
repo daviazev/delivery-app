@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
-import api from '../axios/config';
+import api, { setToken } from '../axios/config';
 
 export default function AdministratorProducts() {
   const [user, setUser] = useState({
@@ -23,6 +23,11 @@ export default function AdministratorProducts() {
   };
 
   useEffect(() => {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setToken(token);
+  }, []);
+
+  useEffect(() => {
     const { email, password, name } = user;
     const checkPasswordAndEmail = checkEmailAndPassword(email, password);
     const checkName = checkUser(name);
@@ -37,7 +42,8 @@ export default function AdministratorProducts() {
       const { data } = await api.post('/admin/manage', user);
       console.log(data);
     } catch (error) {
-      setErrorMessage('User already exists');
+      const { data: { message } } = error.response;
+      setErrorMessage(message);
     }
   };
 
