@@ -3,7 +3,7 @@ const {
   login, 
   register, 
   findByRole, 
-  getUsersController 
+  getUsersController,
 } = require('../controllers/user.controller');
 const { validateJWT } = require('../auth/jwtFunctions');
 

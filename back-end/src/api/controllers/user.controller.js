@@ -40,7 +40,7 @@ const getUsersController = async (_req, res, next) => {
     const users = await userService.getUsers();
     return res.status(200).json(users);
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 };
 
