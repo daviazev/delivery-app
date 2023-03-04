@@ -3,20 +3,18 @@ const { getUserByEmail } = require('../services/user.service');
 
 require('dotenv/config');
 
-const secret = process.env.JWT_SECRET || 'secret';
+const jwtKey = require('fs')
+  .readFileSync('../back-end/jwt.evaluation.key', { encoding: 'utf-8' });
 
 const validateJWT = async (req, res, next) => {
   const token = req.header('Authorization');
 
   if (!token) {
-  throw new Error({
-    status: 404,
-    message: 'Token not found',
-  }); 
-} 
+    return res.status(404).json({ message: 'Token not found' });
+  }
 
   try {
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, jwtKey);
 
     const { email } = decoded.data;
 
