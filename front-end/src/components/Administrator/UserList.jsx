@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../axios/config';
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
 
-  console.log(users);
+  const getUsers = async () => {
+    const usersResponse = await api.get('/admin/manage');
+    const removeAdminsUser = usersResponse.data
+      .filter(({ role }) => role !== 'administrator');
+    setUsers(removeAdminsUser);
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      const usersResponse = await api.get('/admin/manage');
-      const removeAdminsUser = usersResponse.data
-        .filter(({ role }) => role !== 'administrator');
-      setUsers(removeAdminsUser);
-    };
-
     getUsers();
   }, []);
 
@@ -30,7 +28,7 @@ export default function UserList() {
           </tr>
         </thead>
         <tbody>
-          {users.length > 0 && users.map(({ id, name, email, role }, index) => (
+          {users.map(({ id, name, email, role }, index) => (
             <tr key={ id }>
               <td
                 data-testid={ `admin_manage__element-user-table-item-number-${index}` }
