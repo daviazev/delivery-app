@@ -43,4 +43,16 @@ const findByRole = async (role) => {
  return { status: 200, message: result };
 };
 
-module.exports = { login, getUserByEmail, register, findByRole, getUserByName };
+const getUsers = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
+module.exports = { 
+  login,
+  getUserByEmail,
+  register,
+  findByRole,
+  getUserByName,
+  getUsers,
+};
