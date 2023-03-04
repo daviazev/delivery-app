@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
 import api, { setToken } from '../axios/config';
+import UserList from '../components/Administrator/UserList';
 
 export default function AdministratorProducts() {
   const [name, setName] = useState('');
@@ -97,6 +98,7 @@ export default function AdministratorProducts() {
 
       </button>
       <span data-testid="admin_manage__element-invalid-register">{errorMessage}</span>
+      <UserList />
     </div>
   );
 }
