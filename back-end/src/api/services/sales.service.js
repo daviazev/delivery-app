@@ -10,12 +10,18 @@ const postSales = async (body) => {
   await Promise.all(products.map(async ({ productId, quantity }) => {
     console.log('product id e quantity');
     console.log(productId, quantity);
-    const result = await SalesProduct.create(saleId, productId, quantity);
+    const result = await SalesProduct.create({ saleId, productId, quantity });
     return result;
   }));
   return { status: 201, message: dataValues };
 };
 
+async function getSales() {
+  const sales = await Sale.findAll();
+  return sales;
+}
+
 module.exports = {
   postSales,
+  getSales,
 };
