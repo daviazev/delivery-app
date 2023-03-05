@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 export default function RenderProducts(
   { id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber },
 ) {
+  const navigate = useNavigate();
+
+  const sellerOrderDetails = () => {
+    navigate(`/seller/orders/${id}`);
+    // setInLocalStorage();
+  };
+
   return (
-    <div>
+    <div
+      data-testid={ `seller_orders__element-order-id-${id}` }
+      onClick={ sellerOrderDetails }
+    >
       <h3
         data-testid={ `seller_orders__element-order-${id}` }
       >

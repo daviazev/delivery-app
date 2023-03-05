@@ -22,7 +22,7 @@ export default function App() {
         <Route path="/administrator/products" element={ <AdministratorProducts /> } />
         {/* <Route path="/seller/products" element={ <SellerProducts /> } /> */}
         <Route path="/seller/orders" element={ <SellerOrders /> } />
-        <Route path="/seller/orders/:id" element={ <SellerOrderDetails /> } />
+        <Route exact path="/seller/orders/:id" element={ <SellerOrderDetails /> } />
         <Route path="/customer/checkout" element={ <Cart /> } />
         <Route path="/customer/orders/:id" element={ <Details /> } />
         <Route path="*" element={ <NotFound /> } />

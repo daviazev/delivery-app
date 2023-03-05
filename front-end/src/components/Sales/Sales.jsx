@@ -10,8 +10,6 @@ import RenderSales from './RenderSales';
 export default function Sales() {
   const [sales, setSales] = useState([]);
 
-  // const navigate = useNavigate();
-
   useEffect(() => {
     async function getSales() {
       const response = await api.get('/seller/orders');
@@ -20,11 +18,6 @@ export default function Sales() {
     }
     getSales();
   }, []);
-
-  // const sellerOrderDetails = () => {
-  //   navigate('/seller/order/:id');
-  //   setInLocalStorage();
-  // };
 
   if (sales.length === 0) {
     return <Loading />;
