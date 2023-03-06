@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../axios/config';
 
 export default function CustomerProducts() {
   const [products, setProducts] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getProducts() {
@@ -17,6 +20,7 @@ export default function CustomerProducts() {
     function setProductsOnLocalStorage() {
       const filteredProducts = products.filter(({ quantity }) => quantity > 0);
       localStorage.setItem('products', JSON.stringify(filteredProducts));
+      setIsDisabled(!products.some(({ quantity }) => quantity > 0));
     }
     setProductsOnLocalStorage();
   }, [products]);
@@ -48,11 +52,15 @@ export default function CustomerProducts() {
     }));
   };
 
+  const calcProducts = () => products.map(({ quantity, price }) => (
+    Number(quantity) * Number(price)
+  )).reduce((acc, curr) => acc + curr, 0);
+
   return (
-    <div>
+    <section>
       <Navbar />
       <section>
-        {products.map(({ id, name, price, urlImage }, index) => (
+        {products.map(({ id, name, price, urlImage, quantity }, index) => (
           <section key={ index }>
             <h3
               data-testid={ `customer_products__element-card-title-${id}` }
@@ -83,7 +91,7 @@ export default function CustomerProducts() {
               data-testid={ `customer_products__input-card-quantity-${id}` }
               type="number"
               name={ `input${index}` }
-              defaultValue="0"
+              value={ quantity }
               min="0"
               onChange={ ({ target: { value } }) => handleChange(id, Number(value)) }
             />
@@ -96,7 +104,19 @@ export default function CustomerProducts() {
             </button>
           </section>
         ))}
+        <button
+          type="button"
+          data-testid="customer_products__button-cart"
+          onClick={ () => navigate('/customer/checkout') }
+          disabled={ isDisabled }
+        >
+          VER CARRINHO: R$
+          {' '}
+          <span data-testid="customer_products__checkout-bottom-value">
+            {calcProducts().toFixed(2).replace('.', ',')}
+          </span>
+        </button>
       </section>
-    </div>
+    </section>
   );
 }
