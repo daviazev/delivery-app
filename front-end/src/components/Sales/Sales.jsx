@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // import { useNavigate } from 'react-router-dom';
 
-import api from '../../axios/config';
+import api, { setToken } from '../../axios/config';
 import Loading from '../Loading';
 
 import RenderSales from './RenderSales';
@@ -12,6 +12,8 @@ export default function Sales() {
 
   useEffect(() => {
     async function getSales() {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      setToken(token);
       const response = await api.get('/seller/orders');
       console.log('response', response.data);
       setSales(response.data);

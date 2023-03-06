@@ -4,9 +4,8 @@ const salesController = require('../controllers/sales.controller');
 
 const route = Router();
 
-route.post('/', validateJWT, salesController.postSales);
-route.get('/:id', salesController.findSalesById);
-
+route.post('/sales', validateJWT, salesController.postSales);
+route.get('/sales/:id', salesController.findSalesById);
 route.get('/seller/orders', validateJWT, salesController.getSalesController);
 
 module.exports = route;

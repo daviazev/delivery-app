@@ -15,7 +15,7 @@ app.use('/images', express.static(`${__dirname}/../images`));
 
 app.use(userRoutes);
 app.use(productRoutes);
-app.use('/sales', salesRoutes);
+app.use(salesRoutes);
 
 app.use(errorHandler);
 

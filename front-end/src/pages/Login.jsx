@@ -11,7 +11,7 @@ export default function Login() {
 
   const translate = {
     administrator: '/admin/manage',
-    seller: '/seller/products',
+    seller: '/seller/orders',
     customer: '/customer/products',
   };
 
