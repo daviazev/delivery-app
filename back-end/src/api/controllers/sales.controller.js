@@ -8,7 +8,7 @@ const postSales = async (req, res) => {
 const findSalesById = async (req, res) => {
   const { status, message } = await salesService.findSalesById(req.params.id);
   return res.status(status).json(message);
-}
+};
 
 async function getSalesController(_req, res) {
   try {

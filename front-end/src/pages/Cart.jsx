@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Countdown from '../components/Countdown';
 import Navbar from '../components/Navbar';
 import calcTotalPrice from '../utils/calcTotalPrice';
-import api from '../axios/config';
+import api, { setToken } from '../axios/config';
 import '../styles/cart.css';
 
 export default function Cart() {
@@ -58,6 +58,8 @@ export default function Cart() {
 
   const finishPurchase = async (event) => {
     event.preventDefault();
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setToken(token);
     const { data } = await api.post('/sales', newSale);
     setSallesApi(data);
     setIsFinish(true);
