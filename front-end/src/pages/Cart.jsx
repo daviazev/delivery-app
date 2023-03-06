@@ -59,8 +59,6 @@ export default function Cart() {
   const finishPurchase = async (event) => {
     event.preventDefault();
     const { data } = await api.post('/sales', newSale);
-    console.log('API', data);
-    // Anotação: remover setSallesApi e fazer uma api get dentro do Countdown para buscar o id venda criada
     setSallesApi(data);
     setIsFinish(true);
   };
