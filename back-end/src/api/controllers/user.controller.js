@@ -35,4 +35,13 @@ const findByRole = async (req, res) => {
   return res.status(status).json(message);
 };
 
-module.exports = { login, register, findByRole };
+const getUsersController = async (_req, res, next) => {
+  try {
+    const users = await userService.getUsers();
+    return res.status(200).json(users);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { login, register, findByRole, getUsersController };

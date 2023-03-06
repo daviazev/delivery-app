@@ -1,4 +1,5 @@
 const { getUserByEmail, getUserByName } = require('../services/user.service');
+const { validateAdminPostUserFields } = require('./validations/validations.values');
 
 const registerValidation = async (req, res, next) => {
   const { email } = req.body;
@@ -10,7 +11,13 @@ const registerValidation = async (req, res, next) => {
 };
 
 const adminRegisterValidation = async (req, res, next) => {
-  const { email, name } = req.body;
+  const { email, name, password } = req.body;
+  const validate = validateAdminPostUserFields(email, name, password);
+
+  if (validate.type) {
+    const { message } = validate;
+    return res.status(400).json({ message });
+  }
 
   const emailExists = await getUserByEmail(email);
   const nameExists = await getUserByName(name);

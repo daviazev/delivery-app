@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkEmailAndPassword } from '../utils/checkUser';
-import loginApi from '../axios/config';
+import loginApi, { setToken } from '../axios/config';
 // import '../styles/login.css';
 
 export default function Login() {
@@ -37,6 +37,7 @@ export default function Login() {
     event.preventDefault();
     try {
       const { data } = await loginApi.post('/login', user);
+      setToken(data.token);
       const { id, ...userInfo } = data;
       localStorage.setItem('user', JSON.stringify(userInfo));
       localStorage.setItem('userId', JSON.stringify(id));
