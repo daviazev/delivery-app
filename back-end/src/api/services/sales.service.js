@@ -1,4 +1,4 @@
-const { Sale, SalesProduct } = require('../../database/models/index');
+const { Sale, SalesProduct, Product } = require('../../database/models/index');
 
 const postSales = async (body) => {
   const { products, ...sale } = body;
@@ -13,6 +13,18 @@ const postSales = async (body) => {
   return { status: 201, message: dataValues };
 };
 
+const findSalesById = async (saleId) => {
+  const data = await SalesProduct.findAll({ where: { saleId } });
+  if (!data) return { status: 400, message: 'Cannot find sale' };
+  const products = await Promise.all(data.map(async ({ productId, quantity }) => {
+    const { dataValues } = await Product.findOne({ where: { id: productId } });
+    const allProducts = { ...dataValues, quantity } 
+    return allProducts;
+  }));
+  return { status: 200, message: products };
+} 
+
 module.exports = {
   postSales,
+  findSalesById,
 };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function RenderProducts(
   { name, urlImage, price, id, setSubTotal, subTotal,
-    localStorageProducts, setLocalStorageProducts },
+    localStorageProducts, setLocalStorageProducts, setInLocalStorage },
 ) {
   const [quantity, setQuantity] = useState(0);
 
