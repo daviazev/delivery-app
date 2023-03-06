@@ -13,10 +13,7 @@ export default function RenderProducts(
   };
 
   return (
-    <div
-      data-testid={ `seller_orders__element-order-id-${id}` }
-      onClick={ sellerOrderDetails }
-    >
+    <div>
       <h3
         data-testid={ `seller_orders__element-order-${id}` }
       >
@@ -46,6 +43,13 @@ export default function RenderProducts(
       >
         { `${deliveryAddress}, ${deliveryNumber}` }
       </h3>
+      <button
+        data-testid={ `seller_orders__element-order-id-${id}` }
+        onClick={ sellerOrderDetails }
+        type="button"
+      >
+        VER DETALHES
+      </button>
     </div>
   );
 }
