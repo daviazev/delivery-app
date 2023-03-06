@@ -24,7 +24,13 @@ const findSalesById = async (saleId) => {
   return { status: 200, message: products };
 } 
 
+async function getSales() {
+  const sales = await Sale.findAll();
+  return sales;
+}
+
 module.exports = {
   postSales,
   findSalesById,
+  getSales,
 };

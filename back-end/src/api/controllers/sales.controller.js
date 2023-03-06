@@ -10,7 +10,18 @@ const findSalesById = async (req, res) => {
   return res.status(status).json(message);
 }
 
+async function getSalesController(_req, res) {
+  try {
+    const sales = await salesService.getSales();
+    return res.status(200).json(sales);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'erro interno' });
+  }
+}
+
 module.exports = {
   postSales,
   findSalesById,
+  getSalesController,
 };
