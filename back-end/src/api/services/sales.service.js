@@ -18,7 +18,7 @@ const findSalesById = async (saleId) => {
   if (!data) return { status: 400, message: 'Cannot find sale' };
   const products = await Promise.all(data.map(async ({ productId, quantity }) => {
     const { dataValues } = await Product.findOne({ where: { id: productId } });
-    const allProducts = { ...dataValues, quantity } ;
+    const allProducts = { ...dataValues, quantity };
     return allProducts;
   }));
   return { status: 200, message: products };
