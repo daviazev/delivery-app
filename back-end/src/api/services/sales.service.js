@@ -1,4 +1,5 @@
 const { Sale, SalesProduct, Product } = require('../../database/models/index');
+const mergeProductInfos = require('../utils');
 
 const postSales = async (body) => {
   const { products, ...sale } = body;
@@ -29,8 +30,29 @@ async function getSales() {
   return sales;
 }
 
+async function getSaleDetails(id) {
+  const sale = await Sale.findOne({
+    where: { id },
+      attributes: { exclude: [
+      'userId', 'sellerId', 'deliveryAddress', 'deliveryNumber',
+    ] },
+  });
+  const productSales = await SalesProduct.findAll({
+    where: { saleId: id }, attributes: { exclude: ['saleId'] },
+  });
+  const products = await Promise.all(productSales.map(async (p) => {
+    const dataValues = await Product.findOne({
+      where: { id: p.productId },
+    });
+    return dataValues;
+  }));
+  const mergedSalesInfos = mergeProductInfos({ sale, productSales, products });
+  return mergedSalesInfos;
+}
+
 module.exports = {
   postSales,
   findSalesById,
   getSales,
+  getSaleDetails,
 };

@@ -20,8 +20,19 @@ async function getSalesController(_req, res) {
   }
 }
 
+const getSaleDetailsById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await salesService.getSaleDetails(id);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   postSales,
   findSalesById,
   getSalesController,
+  getSaleDetailsById,
 };
