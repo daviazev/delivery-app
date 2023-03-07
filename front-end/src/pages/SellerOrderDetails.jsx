@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api, { setToken } from '../axios/config';
 import Loading from '../components/Loading';
+import formatDate from '../utils/formatDate';
 
 export default function SellerOrderDetails() {
   const { id } = useParams();
@@ -10,6 +11,7 @@ export default function SellerOrderDetails() {
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
   const [saleDate, setSaleDate] = useState('');
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     const getSaleDetails = async () => {
@@ -21,6 +23,11 @@ export default function SellerOrderDetails() {
         setStatus(data.sale.status);
         setSaleDate(data.sale.saleDate);
         setSales(data.products);
+        if (data.sale.status === 'Pendente') {
+          setDisabled(true);
+        } else {
+          setDisabled(false);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +53,7 @@ export default function SellerOrderDetails() {
         data-testid="seller_order_details__element-order-details-label-order-date"
       >
         {' '}
-        {saleDate}
+        {formatDate(saleDate)}
       </span>
       <span
         data-testid="seller_order_details__element-order-details-label-delivery-status"
@@ -65,6 +72,7 @@ export default function SellerOrderDetails() {
       <button
         data-testid="seller_order_details__button-dispatch-check"
         type="button"
+        disabled={ disabled }
       >
         {' '}
         Saiu para entrega
