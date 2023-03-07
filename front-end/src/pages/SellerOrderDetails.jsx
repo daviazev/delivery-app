@@ -9,13 +9,19 @@ export default function SellerOrderDetails() {
   console.log(typeof id);
   const [sales, setSales] = useState([]);
   const [total, setTotal] = useState(0);
+  const [status, setStatus] = useState('');
+  const [saleDate, setSaleDate] = useState('');
 
   useEffect(() => {
     const getSaleDetails = async () => {
       const { token } = JSON.parse(localStorage.getItem('user'));
       setToken(token);
       try {
-        const data = await api.get(`/seller/orders/${id}`);
+        const { data } = await api.get(`/seller/orders/${id}`);
+        console.log('data', data);
+        setTotal(data.sale.totalPrice);
+        setStatus(data.sale.status);
+        setSaleDate(data.sale.saleDate);
         setSales(data.products);
         console.log('data', data);
       } catch (error) {
@@ -37,29 +43,34 @@ export default function SellerOrderDetails() {
           `seller_order_details__element-order-details-label-order-${id}`
         }
       >
-        Pedido
+        {`Pedido: ${id}`}
       </span>
       <span
         data-testid="seller_order_details__element-order-details-label-order-date"
       >
-        Data
+        {' '}
+        {saleDate}
       </span>
       <span
         data-
         testid="seller_order_details__element-order-details-label-delivery-status"
       >
-        Status
+        {' '}
+        {status}
+        {' '}
       </span>
       <button
         data-testid="seller_order_details__button-preparing-check"
         type="button"
       >
+        {' '}
         Preparar Pedido
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
         type="button"
       >
+        {' '}
         Saiu para entrega
       </button>
       <table className="table">
@@ -101,7 +112,7 @@ export default function SellerOrderDetails() {
                   `seller_order_details__element-order-table-unit-price-${index}`
                 }
               >
-                {`${(price).toFixed(2).replace('.', ',')}`}
+                {price.replace('.', ',')}
               </td>
               <td
                 data-testid={
@@ -117,7 +128,7 @@ export default function SellerOrderDetails() {
       <div
         data-testid="seller_order_details__element-order-total-price"
       >
-        {`${(11).toFixed(2).replace('.', ',')}`}
+        {total.replace('.', ',')}
       </div>
     </div>
   );
