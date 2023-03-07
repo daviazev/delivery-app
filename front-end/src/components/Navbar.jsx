@@ -18,12 +18,20 @@ export default function Navbar() {
   return (
     <header>
       <ul>
-        <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
-        <li
-          data-testid="customer_products__element-navbar-link-orders"
+        <a
+          href="/customer/products"
         >
-          MEUS PEDIDOS
-        </li>
+          <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
+        </a>
+        <a
+          href="/customer/checkout"
+        >
+          <li
+            data-testid="customer_products__element-navbar-link-orders"
+          >
+            MEUS PEDIDOS
+          </li>
+        </a>
         <li
           data-testid="customer_products__element-navbar-user-full-name"
         >

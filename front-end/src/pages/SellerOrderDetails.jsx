@@ -36,13 +36,11 @@ export default function SellerOrderDetails() {
     <div>
       <Navbar />
       <div>
-        <span
-          data-testid={
-            `seller_order_details__element-order-details-label-order-${id}`
-          }
+        <p
+          data-testid="seller_order_details__element-order-details-label-order-id"
         >
           {`Pedido: ${id}`}
-        </span>
+        </p>
       </div>
       <span
         data-testid="seller_order_details__element-order-details-label-order-date"
@@ -51,8 +49,7 @@ export default function SellerOrderDetails() {
         {saleDate}
       </span>
       <span
-        data-
-        testid="seller_order_details__element-order-details-label-delivery-status"
+        data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
         {' '}
         {status}
