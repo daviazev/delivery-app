@@ -6,7 +6,6 @@ import Loading from '../components/Loading';
 
 export default function SellerOrderDetails() {
   const { id } = useParams();
-  console.log(typeof id);
   const [sales, setSales] = useState([]);
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
@@ -18,12 +17,10 @@ export default function SellerOrderDetails() {
       setToken(token);
       try {
         const { data } = await api.get(`/seller/orders/${id}`);
-        console.log('data', data);
         setTotal(data.sale.totalPrice);
         setStatus(data.sale.status);
         setSaleDate(data.sale.saleDate);
         setSales(data.products);
-        console.log('data', data);
       } catch (error) {
         console.error(error);
       }
@@ -38,13 +35,15 @@ export default function SellerOrderDetails() {
   return (
     <div>
       <Navbar />
-      <span
-        data-testid={
-          `seller_order_details__element-order-details-label-order-${id}`
-        }
-      >
-        {`Pedido: ${id}`}
-      </span>
+      <div>
+        <span
+          data-testid={
+            `seller_order_details__element-order-details-label-order-${id}`
+          }
+        >
+          {`Pedido: ${id}`}
+        </span>
+      </div>
       <span
         data-testid="seller_order_details__element-order-details-label-order-date"
       >

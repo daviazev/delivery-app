@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function RenderProducts(
   { id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber },
 ) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const sellerOrderDetails = () => {
-    navigate(`/seller/orders/${id}`);
-    // setInLocalStorage();
-  };
+  // const sellerOrderDetails = () => {
+  //   navigate(`/seller/orders/${id}`);
+  //   // setInLocalStorage();
+  // };
 
   return (
-    <div>
+    <Link
+      data-testid={ `seller_orders__element-order-id-${id}` }
+      // onClick={ sellerOrderDetails }
+      to={ `/seller/orders/${id}` }
+    >
       <h3
         data-testid={ `seller_orders__element-order-${id}` }
       >
@@ -43,14 +47,7 @@ export default function RenderProducts(
       >
         { `${deliveryAddress}, ${deliveryNumber}` }
       </h3>
-      <button
-        data-testid={ `seller_orders__element-order-id-${id}` }
-        onClick={ sellerOrderDetails }
-        type="button"
-      >
-        VER DETALHES
-      </button>
-    </div>
+    </Link>
   );
 }
 
