@@ -5,7 +5,6 @@ const { getUserByEmail } = require('../services/user.service');
 
 const validateJWT = async (req, res, next) => {
   const token = req.header('Authorization');
-  console.log(token);
   if (!token) {
     return res.status(404).json({ message: 'Token not found' });
   }

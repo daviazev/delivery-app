@@ -22,7 +22,13 @@ export default function Navbar() {
         <li
           data-testid="customer_products__element-navbar-link-orders"
         >
-          MEUS PEDIDOS
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => navigate('/customer/orders') }
+          >
+            MEUS PEDIDOS
+          </button>
         </li>
         <li
           data-testid="customer_products__element-navbar-user-full-name"

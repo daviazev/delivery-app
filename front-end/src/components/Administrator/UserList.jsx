@@ -54,13 +54,15 @@ export default function UserList() {
                 {role}
 
               </td>
-              <button
-                data-testid={ `admin_manage__element-user-table-remove-${index}` }
-                type="button"
-              >
-                Excluir
+              <td>
+                <button
+                  data-testid={ `admin_manage__element-user-table-remove-${index}` }
+                  type="button"
+                >
+                  Excluir
 
-              </button>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
