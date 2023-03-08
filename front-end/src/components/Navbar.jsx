@@ -24,7 +24,7 @@ export default function Navbar() {
           <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
         </a>
         <a
-          href="/customer/checkout"
+          href="/customer/orders"
         >
           <li
             data-testid="customer_products__element-navbar-link-orders"
