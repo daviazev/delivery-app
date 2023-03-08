@@ -55,10 +55,17 @@ async function handleStatus({ status, id }) {
   return updated;
 }
 
+const getSalesId = async (id) => {
+  const data = await Sale.findOne({ where: { id } });
+  if (!data) return { status: 400, message: 'Cannot find sale' };
+  return { status: 200, message: data };
+};
+
 module.exports = {
   postSales,
   findSalesById,
   getSales,
   getSaleDetails,
   handleStatus,
+  getSalesId,
 };

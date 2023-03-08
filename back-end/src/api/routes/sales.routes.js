@@ -9,5 +9,6 @@ route.get('/sales/:id', salesController.findSalesById);
 route.get('/seller/orders', validateJWT, salesController.getSalesController);
 route.get('/seller/orders/:id', validateJWT, salesController.getSaleDetailsById);
 route.put('/seller/orders/:id', validateJWT, salesController.handleStatusController);
+route.get('/orders/:id', validateJWT, salesController.getSalesId);
 
 module.exports = route;

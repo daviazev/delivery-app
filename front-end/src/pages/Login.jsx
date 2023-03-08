@@ -22,6 +22,11 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const local = JSON.parse(localStorage.getItem('user'));
+    if (local) navigate('/customer/products');
+  }, []);
+
+  useEffect(() => {
     const validateForm = () => {
       const { email, password } = user;
       if (checkEmailAndPassword(email, password)) {

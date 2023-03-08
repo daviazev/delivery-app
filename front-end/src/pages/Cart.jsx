@@ -14,7 +14,7 @@ export default function Cart() {
 
   const [newSale, setNewSale] = useState({
     userId: '',
-    sellerId: '1',
+    sellerId: '2',
     totalPrice: 0,
     deliveryAddress: '',
     deliveryNumber: '',
@@ -42,7 +42,7 @@ export default function Cart() {
         setNewSale((prevState) => ({
           ...prevState,
           totalPrice: Number(calcTotalPrice(products).replace(',', '.')),
-          userId: localStorage.getItem('userId'),
+          userId: JSON.parse(localStorage.getItem('userId')),
           products: products.map(({ id, quantity }) => ({ productId: id, quantity })),
         }));
       }
@@ -61,6 +61,7 @@ export default function Cart() {
     const { token } = JSON.parse(localStorage.getItem('user'));
     setToken(token);
     const { data } = await api.post('/sales', newSale);
+    localStorage.setItem('sellerId', JSON.parse(data.sellerId));
     setSallesApi(data);
     setIsFinish(true);
   };

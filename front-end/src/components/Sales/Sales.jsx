@@ -15,7 +15,6 @@ export default function Sales() {
       const { token } = JSON.parse(localStorage.getItem('user'));
       setToken(token);
       const response = await api.get('/seller/orders');
-      console.log('response', response.data);
       setSales(response.data);
     }
     getSales();

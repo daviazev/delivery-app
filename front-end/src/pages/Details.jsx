@@ -2,26 +2,61 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import calcTotalPrice from '../utils/calcTotalPrice';
-import api from '../axios/config';
+import api, { setToken } from '../axios/config';
 import Loading from '../components/Loading';
 
 export default function Details() {
   const { id } = useParams();
-  const [salles, setSalles] = useState([]);
+  const [apiResult, setApiResult] = useState({
+    products: [],
+    seller: [],
+    order: {},
+  });
   const [isFetching, setIsFinish] = useState(true);
+
+  const sellerId = JSON.parse(localStorage.getItem('sellerId'));
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         const { data } = await api.get(`/sales/${id}`);
-        setSalles(data);
+        setApiResult((prevState) => ({ ...prevState, products: data }));
         setIsFinish(false);
       } catch (error) {
         console.error(error);
       }
     };
     getProducts();
+
+    const getSellerName = async () => {
+      try {
+        const { data } = await api.get('/seller', { params: { q: 'seller' } });
+        setApiResult((prevState) => ({ ...prevState, seller: data }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getSellerName();
+
+    const test = async () => {
+      try {
+        const { token } = JSON.parse(localStorage.getItem('user'));
+        setToken(token);
+        const { data } = await api.get(`/orders/${id}`);
+        setApiResult((prevState) => ({ ...prevState, order: data }));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    test();
   }, []);
+
+  const sellerName = () => {
+    if (apiResult.seller.length) {
+      const { name } = apiResult.seller.find((seller) => seller.id === sellerId);
+      return name;
+    }
+  };
 
   return (
     <section>
@@ -32,10 +67,16 @@ export default function Details() {
           <Navbar />
           <h1>Detalhe do pedido</h1>
           <section>
-            <strong>Pedido 0003;</strong>
-            <p>P. Vend: Fulana Pereira</p>
-            <p>07/04/2021</p>
-            <span>ENTREGUE</span>
+            <strong
+              data-testid="customer_order_details__element-order-details-label-order-id"
+            >
+              {`Pedido ${id}`}
+            </strong>
+            <p>
+              {`P. Vend: ${sellerName()}`}
+            </p>
+            <p>{new Date(apiResult.order.saleDate).toLocaleDateString('pt-BR')}</p>
+            <span>{apiResult.order.status}</span>
             <button type="button">MARCAR COMO ENTREGUE</button>
           </section>
           <table className="table">
@@ -49,7 +90,7 @@ export default function Details() {
               </tr>
             </thead>
             <tbody>
-              {salles.map(({ name, price, quantity }, i) => (
+              {apiResult.products.map(({ name, price, quantity }, i) => (
                 <tr key={ i }>
                   <td
                     data-testid={
@@ -91,7 +132,8 @@ export default function Details() {
               ))}
             </tbody>
           </table>
-          { salles.length && `Total: R$ ${calcTotalPrice(salles)}`}
+          { apiResult.products.length
+          && `Total: R$ ${calcTotalPrice(apiResult.products)}`}
         </section>
       )}
     </section>

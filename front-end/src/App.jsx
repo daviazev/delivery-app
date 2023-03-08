@@ -9,6 +9,7 @@ import Details from './pages/Details';
 import NotFound from './pages/NotFound';
 import SellerOrders from './pages/SellerOrders';
 import SellerOrderDetails from './pages/SellerOrderDetails';
+import MyOrders from './pages/MyOrders';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route exact path="/seller/orders/:id" element={ <SellerOrderDetails /> } />
         <Route path="/customer/checkout" element={ <Cart /> } />
         <Route path="/customer/orders/:id" element={ <Details /> } />
+        <Route path="/customer/orders" element={ <MyOrders /> } />
         <Route path="*" element={ <NotFound /> } />
       </Routes>
     </Router>
