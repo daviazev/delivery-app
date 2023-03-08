@@ -11,7 +11,9 @@ export default function SellerOrderDetails() {
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
   const [saleDate, setSaleDate] = useState('');
-  const [disabled, setDisabled] = useState(true);
+
+  const [preparing, setPreparing] = useState(true);
+  const [inTransit, setInTrasit] = useState(false);
 
   useEffect(() => {
     const getSaleDetails = async () => {
@@ -23,10 +25,13 @@ export default function SellerOrderDetails() {
         setStatus(data.sale.status);
         setSaleDate(data.sale.saleDate);
         setSales(data.products);
-        if (data.sale.status === 'Pendente') {
-          setDisabled(true);
-        } else {
-          setDisabled(false);
+
+        setPreparing(data.sale.status === 'Pendente');
+        setInTrasit(data.sale.status === 'Preparando');
+
+        if (data.sale.status === 'Em Trânsito') {
+          setInTrasit(true);
+          setPreparing(true);
         }
       } catch (error) {
         console.error(error);
@@ -34,6 +39,22 @@ export default function SellerOrderDetails() {
     };
     getSaleDetails();
   }, []);
+
+  const changeStatusInDB = async (value) => {
+    await api.put(`/seller/orders/${id}`, { status: value });
+  };
+
+  const handleStatus = ({ target: { value } }) => {
+    setStatus(value);
+    setInTrasit(true);
+    setPreparing(false);
+
+    if (value === 'Em Trânsito') {
+      setPreparing(true);
+    }
+
+    changeStatusInDB(value);
+  };
 
   if (sales.length === 0) {
     return <Loading />;
@@ -65,6 +86,9 @@ export default function SellerOrderDetails() {
       <button
         data-testid="seller_order_details__button-preparing-check"
         type="button"
+        onClick={ (event) => handleStatus(event) }
+        disabled={ inTransit }
+        value="Preparando"
       >
         {' '}
         Preparar Pedido
@@ -72,7 +96,9 @@ export default function SellerOrderDetails() {
       <button
         data-testid="seller_order_details__button-dispatch-check"
         type="button"
-        disabled={ disabled }
+        disabled={ preparing }
+        onClick={ (event) => handleStatus(event) }
+        value="Em Trânsito"
       >
         {' '}
         Saiu para entrega
