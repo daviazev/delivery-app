@@ -50,9 +50,15 @@ async function getSaleDetails(id) {
   return mergedSalesInfos;
 }
 
+async function handleStatus({ status, id }) {
+  const updated = await Sale.update({ status }, { where: { id } });
+  return updated;
+}
+
 module.exports = {
   postSales,
   findSalesById,
   getSales,
   getSaleDetails,
+  handleStatus,
 };

@@ -30,9 +30,21 @@ const getSaleDetailsById = async (req, res) => {
   }
 };
 
+const handleStatusController = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+    const data = await salesService.handleStatus({ status, id });
+    return res.status(201).json({ data });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   postSales,
   findSalesById,
   getSalesController,
   getSaleDetailsById,
+  handleStatusController,
 };
