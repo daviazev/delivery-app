@@ -4,6 +4,9 @@ import Navbar from '../components/Navbar';
 import calcTotalPrice from '../utils/calcTotalPrice';
 import api, { setToken } from '../axios/config';
 import Loading from '../components/Loading';
+import formatDate from '../utils/formatDate';
+
+const dataTestId = 'customer_order_details__element-order-details-label';
 
 export default function Details() {
   const { id } = useParams();
@@ -48,7 +51,6 @@ export default function Details() {
   };
 
   const sellerName = () => {
-    console.log(apiResult.seller);
     if (apiResult.seller.length && apiResult.order) {
       const result = apiResult.seller
         .find((seller) => seller.id === apiResult.order.sellerId);
@@ -72,19 +74,17 @@ export default function Details() {
               {`Pedido ${id}`}
             </strong>
             <p
-              data-
-              testid="customer_order_details__element-order-details-label-seller-name"
+              data-testid={ `${dataTestId}-seller-name` }
             >
               {`P. Vend: ${sellerName()}`}
             </p>
             <p
               data-testid="customer_order_details__element-order-details-label-order-date"
             >
-              {new Date(apiResult.order.saleDate).toLocaleDateString('pt-BR')}
+              {formatDate(apiResult.order.saleDate)}
             </p>
             <p
-              data-
-              testid="customer_order_details__element-order-details-label-delivery-status"
+              data-testid={ `${dataTestId}-delivery-status` }
             >
               { status }
             </p>
@@ -152,8 +152,10 @@ export default function Details() {
               ))}
             </tbody>
           </table>
-          { apiResult.products.length
+          <div data-testid="customer_order_details__element-order-total-price">
+            { apiResult.products.length
           && `Total: R$ ${calcTotalPrice(apiResult.products)}`}
+          </div>
         </section>
       )}
     </section>
