@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../axios/config';
+import dataTestsIds from '../../utils/dataTestsIds';
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
@@ -31,32 +32,32 @@ export default function UserList() {
           {users.map(({ id, name, email, role }, index) => (
             <tr key={ id }>
               <td
-                data-testid={ `admin_manage__element-user-table-item-number-${index}` }
+                data-testid={ `${dataTestsIds[70]}${index}` }
               >
                 {id}
 
               </td>
               <td
-                data-testid={ `admin_manage__element-user-table-name-${index}` }
+                data-testid={ `${dataTestsIds[71]}${index}` }
               >
                 {name}
 
               </td>
               <td
-                data-testid={ `admin_manage__element-user-table-email-${index}` }
+                data-testid={ `${dataTestsIds[72]}${index}` }
               >
                 {email}
 
               </td>
               <td
-                data-testid={ `admin_manage__element-user-table-role-${index}` }
+                data-testid={ `${dataTestsIds[73]}${index}` }
               >
                 {role}
 
               </td>
               <td>
                 <button
-                  data-testid={ `admin_manage__element-user-table-remove-${index}` }
+                  data-testid={ `${dataTestsIds[74]}${index}` }
                   type="button"
                 >
                   Excluir

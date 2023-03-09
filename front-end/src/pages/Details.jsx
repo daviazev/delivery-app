@@ -5,8 +5,7 @@ import calcTotalPrice from '../utils/calcTotalPrice';
 import api, { setToken } from '../axios/config';
 import Loading from '../components/Loading';
 import formatDate from '../utils/formatDate';
-
-const dataTestId = 'customer_order_details__element-order-details-label';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function Details() {
   const { id } = useParams();
@@ -69,28 +68,28 @@ export default function Details() {
           <h1>Detalhe do pedido</h1>
           <section>
             <strong
-              data-testid="customer_order_details__element-order-details-label-order-id"
+              data-testid={ `${dataTestsIds[38]}` }
             >
               {`Pedido ${id}`}
             </strong>
             <p
-              data-testid={ `${dataTestId}-seller-name` }
+              data-testid={ `${dataTestsIds[39]}` }
             >
               {`P. Vend: ${sellerName()}`}
             </p>
             <p
-              data-testid="customer_order_details__element-order-details-label-order-date"
+              data-testid={ `${dataTestsIds[40]}` }
             >
               {formatDate(apiResult.order.saleDate)}
             </p>
             <p
-              data-testid={ `${dataTestId}-delivery-status` }
+              data-testid={ `${dataTestsIds[41]}` }
             >
               { status }
             </p>
             <button
               type="button"
-              data-testid="customer_order_details__button-delivery-check"
+              data-testid={ `${dataTestsIds[48]}` }
               disabled={ status !== 'Em Trânsito' }
               onClick={ (event) => handleStatus(event) }
               value="Entregue"
@@ -113,37 +112,27 @@ export default function Details() {
               {apiResult.products.map(({ name, price, quantity }, i) => (
                 <tr key={ i }>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-item-number-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[42]}${i}` }
                   >
                     {i + 1}
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-name-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[43]}${i}` }
                   >
                     {name}
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-quantity-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[44]}${i}` }
                   >
                     {quantity}
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-unit-price-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[45]}${i}` }
                   >
                     {`R$ ${Number(price).toFixed(2).replace('.', ',')}`}
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-sub-total-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[46]}${i}` }
                   >
                     {`R$ ${(Number(price) * Number(quantity))
                       .toFixed(2).replace('.', ',')}`}
@@ -152,7 +141,7 @@ export default function Details() {
               ))}
             </tbody>
           </table>
-          <div data-testid="customer_order_details__element-order-total-price">
+          <div data-testid={ `${dataTestsIds[47]}` }>
             { apiResult.products.length
           && `Total: R$ ${calcTotalPrice(apiResult.products)}`}
           </div>

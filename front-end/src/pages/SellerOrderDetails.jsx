@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import api, { setToken } from '../axios/config';
 import Loading from '../components/Loading';
 import formatDate from '../utils/formatDate';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function SellerOrderDetails() {
   const { id } = useParams();
@@ -65,26 +66,26 @@ export default function SellerOrderDetails() {
       <Navbar />
       <div>
         <p
-          data-testid="seller_order_details__element-order-details-label-order-id"
+          data-testid={ dataTestsIds[54] }
         >
           {`Pedido: ${id}`}
         </p>
       </div>
       <span
-        data-testid="seller_order_details__element-order-details-label-order-date"
+        data-testid={ dataTestsIds[56] }
       >
         {' '}
         {formatDate(saleDate)}
       </span>
       <span
-        data-testid="seller_order_details__element-order-details-label-delivery-status"
+        data-testid={ dataTestsIds[55] }
       >
         {' '}
         {status}
         {' '}
       </span>
       <button
-        data-testid="seller_order_details__button-preparing-check"
+        data-testid={ dataTestsIds[57] }
         type="button"
         onClick={ (event) => handleStatus(event) }
         disabled={ inTransit }
@@ -94,7 +95,7 @@ export default function SellerOrderDetails() {
         Preparar Pedido
       </button>
       <button
-        data-testid="seller_order_details__button-dispatch-check"
+        data-testid={ dataTestsIds[58] }
         type="button"
         disabled={ preparing }
         onClick={ (event) => handleStatus(event) }
@@ -117,37 +118,27 @@ export default function SellerOrderDetails() {
           {sales.map(({ quantity, name, price }, index) => (
             <tr key={ index }>
               <td
-                data-testid={
-                  `seller_order_details__element-order-table-item-number-${index}`
-                }
+                data-testid={ `${dataTestsIds[59]}${index}` }
               >
                 {index + 1}
               </td>
               <td
-                data-testid={
-                  `seller_order_details__element-order-table-name-${index}`
-                }
+                data-testid={ `${dataTestsIds[60]}${index}` }
               >
                 {name}
               </td>
               <td
-                data-testid={
-                  `seller_order_details__element-order-table-quantity-${index}`
-                }
+                data-testid={ `${dataTestsIds[61]}${index}` }
               >
                 {quantity}
               </td>
               <td
-                data-testid={
-                  `seller_order_details__element-order-table-unit-price-${index}`
-                }
+                data-testid={ `${dataTestsIds[62]}${index}` }
               >
                 {price.replace('.', ',')}
               </td>
               <td
-                data-testid={
-                  `seller_order_details__element-order-table-sub-total-${index}`
-                }
+                data-testid={ `${dataTestsIds[63]}${index}` }
               >
                 {`${(quantity * price).toFixed(2).replace('.', ',')}`}
               </td>
@@ -156,7 +147,7 @@ export default function SellerOrderDetails() {
         </tbody>
       </table>
       <div
-        data-testid="seller_order_details__element-order-total-price"
+        data-testid={ `${dataTestsIds[64]}` }
       >
         {total.replace('.', ',')}
       </div>

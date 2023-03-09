@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import calcTotalPrice from '../utils/calcTotalPrice';
 import api, { setToken } from '../axios/config';
 import '../styles/cart.css';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function Cart() {
   const [products, setProducts] = useState([]);
@@ -93,49 +94,33 @@ export default function Cart() {
             <tbody>
               {products.map(({ name, price, quantity, id }, i) => (
                 <tr key={ i }>
-                  <td
-                    data-testid={
-                      `customer_checkout__element-order-table-item-number-${i}`
-                    }
-                  >
-                    {i + 1}
-                  </td>
+                  <td data-testid={ `${dataTestsIds[23]}${i}` }>{i + 1}</td>
                   <td>{id}</td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-name-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[24]}${i}` }
                   >
                     {name}
+
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-quantity-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[25]}${i}` }
                   >
                     {quantity}
+
                   </td>
                   <td
-                    data-testid={
-                      `customer_checkout__element-order-table-unit-price-${i}`
-                    }
+                    data-testid={ `${dataTestsIds[26]}${i}` }
                   >
                     {`${Number(price).toFixed(2).replace('.', ',')}`}
                   </td>
-                  <td
-                    data-testid={
-                      `customer_checkout__element-order-table-sub-total-${i}`
-                    }
-                  >
+                  <td data-testid={ `${dataTestsIds[27]}${i}` }>
                     {`${(Number(price) * Number(quantity))
                       .toFixed(2).replace('.', ',')}`}
                   </td>
                   <td>
                     <button
                       type="button"
-                      data-testid={
-                        `customer_checkout__element-order-table-remove-${i}`
-                      }
+                      data-testid={ `${dataTestsIds[28]}${i}` }
                       onClick={ () => removeProduct(i) }
                     >
                       Remover
@@ -146,9 +131,7 @@ export default function Cart() {
               ))}
             </tbody>
           </table>
-          <h1
-            data-testid="customer_checkout__element-order-total-price"
-          >
+          <h1 data-testid={ `${dataTestsIds[29]}` }>
             {products.length && `Total: R$ ${calcTotalPrice(products)}`}
           </h1>
           <h2>Detalhes e Endereço para Entrega</h2>
@@ -158,7 +141,7 @@ export default function Cart() {
               <select
                 id="select"
                 name="sellerId"
-                data-testid="customer_checkout__select-seller"
+                data-testid={ `${dataTestsIds[30]}` }
                 onChange={ handleChange }
               >
                 {sellers.map(({ name, id }, index) => (
@@ -173,7 +156,7 @@ export default function Cart() {
                 id="address"
                 placeholder="Digite seu Endereço"
                 name="deliveryAddress"
-                data-testid="customer_checkout__input-address"
+                data-testid={ `${dataTestsIds[31]}` }
                 onChange={ handleChange }
               />
             </label>
@@ -183,13 +166,13 @@ export default function Cart() {
                 type="number"
                 id="houseNumber"
                 name="deliveryNumber"
-                data-testid="customer_checkout__input-address-number"
+                data-testid={ `${dataTestsIds[32]}` }
                 onChange={ handleChange }
               />
             </label>
             <button
               type="submit"
-              data-testid="customer_checkout__button-submit-order"
+              data-testid={ `${dataTestsIds[33]}` }
             >
               FINALIZAR PRODUTO
             </button>
