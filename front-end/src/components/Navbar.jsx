@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function Navbar() {
   const [user, setUser] = useState({});
@@ -21,25 +22,25 @@ export default function Navbar() {
         <a
           href="/customer/products"
         >
-          <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
+          <li data-testid={ dataTestsIds[11] }>PRODUTOS</li>
         </a>
         <a
-          href="/customer/orders"
+          href={ user.role === 'seller' ? '/seller/orders' : '/customer/orders' }
         >
           <li
-            data-testid="customer_products__element-navbar-link-orders"
+            data-testid={ dataTestsIds[12] }
           >
             <button
               type="button"
               onClick={ () => navigate() }
-              data-testid="customer_products__element-navbar-link-orders"
+              data-testid={ dataTestsIds[12] }
             >
               MEUS PEDIDOS
             </button>
           </li>
         </a>
         <li
-          data-testid="customer_products__element-navbar-user-full-name"
+          data-testid={ dataTestsIds[13] }
         >
           {user.name}
         </li>
@@ -47,7 +48,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={ () => logout() }
-            data-testid="customer_products__element-navbar-link-logout"
+            data-testid={ dataTestsIds[14] }
           >
             SAIR
           </button>

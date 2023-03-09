@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api, { setToken } from '../axios/config';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function MyOrders() {
   const [sales, setSalles] = useState([]);
@@ -32,24 +33,25 @@ export default function MyOrders() {
             key={ index }
             onClick={ () => navigate(`/customer/orders/${id}`) }
           >
-            <div data-testid={ `customer_orders__element-order-id-${id}` }>
+            <div data-testid={ `${dataTestsIds[34]}${id}` }>
               <p>Pedido</p>
               <p>{id}</p>
             </div>
             <span
-              data-testid={ `customer_orders__element-delivery-status-${id}` }
+              data-testid={ `${dataTestsIds[35]}${id}` }
             >
               { status }
             </span>
             <div>
               <p
-                data-testid={ `customer_orders__element-order-date-${id}` }
+                data-testid={ `${dataTestsIds[36]}${id}` }
               >
                 {new Date(saleDate).toLocaleDateString('pt-BR')}
 
               </p>
               <p
-                data-testid={ `customer_orders__element-card-price-${id}` }
+                data-testid={ `${dataTestsIds[37]}${id}` }
+
               >
                 {`R$ ${totalPrice.replace('.', ',')}`}
               </p>

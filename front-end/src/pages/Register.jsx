@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkEmailAndPassword, checkUser } from '../utils/checkUser';
 import loginApi from '../axios/config';
 // import '../styles/register.css';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -27,7 +28,9 @@ export default function Register() {
     event.preventDefault();
     try {
       const { data } = await loginApi.post('/register', user);
-      localStorage.setItem('user', JSON.stringify(data));
+      const { id, ...userInfo } = data;
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      localStorage.setItem('userId', JSON.stringify(id));
       navigate(translate[data.role]);
     } catch (error) {
       console.error(error);
@@ -61,7 +64,7 @@ export default function Register() {
           placeholder="Seu Nome"
           onChange={ handleChange }
           value={ user.name }
-          data-testid="common_register__input-name"
+          data-testid={ dataTestsIds[6] }
         />
         <input
           className="inputRegister"
@@ -70,7 +73,7 @@ export default function Register() {
           placeholder="Email"
           value={ user.email }
           onChange={ handleChange }
-          data-testid="common_register__input-email"
+          data-testid={ dataTestsIds[7] }
         />
         <input
           className="inputRegister"
@@ -79,20 +82,20 @@ export default function Register() {
           placeholder="**********"
           onChange={ handleChange }
           value={ user.password }
-          data-testid="common_register__input-password"
+          data-testid={ dataTestsIds[8] }
         />
         <button
           type="submit"
           className="registerBtn"
           disabled={ isDisable }
-          data-testid="common_register__button-register"
+          data-testid={ dataTestsIds[9] }
         >
           Cadastrar
         </button>
       </form>
       <span
         className="registerError"
-        data-testid="common_register__element-invalid_register"
+        data-testid={ dataTestsIds[10] }
         style={ { visibility: isVisible } }
       >
         User already exists
