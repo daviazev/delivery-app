@@ -12,49 +12,48 @@ export default function Details() {
     seller: [],
     order: {},
   });
-  const [isFetching, setIsFinish] = useState(true);
 
-  const sellerId = JSON.parse(localStorage.getItem('sellerId'));
+  const [isFetching, setIsFinish] = useState(true);
+  const [status, setStatus] = useState('');
+
+  const fetchApi = async () => {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setToken(token);
+    const saleById = await api.get(`/sales/${id}`);
+    const seller = await api.get('/seller', { params: { q: 'seller' } });
+    const orderById = await api.get(`/orders/${id}`);
+
+    setApiResult((prevState) => ({ ...prevState,
+      products: saleById.data,
+      seller: seller.data,
+      order: orderById.data,
+    }));
+
+    setStatus(orderById.data.status);
+
+    setIsFinish(false);
+  };
 
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const { data } = await api.get(`/sales/${id}`);
-        setApiResult((prevState) => ({ ...prevState, products: data }));
-        setIsFinish(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getProducts();
-
-    const getSellerName = async () => {
-      try {
-        const { data } = await api.get('/seller', { params: { q: 'seller' } });
-        setApiResult((prevState) => ({ ...prevState, seller: data }));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getSellerName();
-
-    const test = async () => {
-      try {
-        const { token } = JSON.parse(localStorage.getItem('user'));
-        setToken(token);
-        const { data } = await api.get(`/orders/${id}`);
-        setApiResult((prevState) => ({ ...prevState, order: data }));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    test();
+    fetchApi();
   }, []);
 
+  const changeStatusInDB = async (value) => {
+    await api.put(`/seller/orders/${id}`, { status: value });
+  };
+
+  const handleStatus = ({ target: { value } }) => {
+    setStatus(value);
+    changeStatusInDB(value);
+  };
+
   const sellerName = () => {
-    if (apiResult.seller.length) {
-      const { name } = apiResult.seller.find((seller) => seller.id === sellerId);
-      return name;
+    console.log(apiResult.seller);
+    if (apiResult.seller.length && apiResult.order) {
+      const result = apiResult.seller
+        .find((seller) => seller.id === apiResult.order.sellerId);
+
+      if (result) return result.name;
     }
   };
 
@@ -72,12 +71,33 @@ export default function Details() {
             >
               {`Pedido ${id}`}
             </strong>
-            <p>
+            <p
+              data-
+              testid="customer_order_details__element-order-details-label-seller-name"
+            >
               {`P. Vend: ${sellerName()}`}
             </p>
-            <p>{new Date(apiResult.order.saleDate).toLocaleDateString('pt-BR')}</p>
-            <span>{apiResult.order.status}</span>
-            <button type="button">MARCAR COMO ENTREGUE</button>
+            <p
+              data-testid="customer_order_details__element-order-details-label-order-date"
+            >
+              {new Date(apiResult.order.saleDate).toLocaleDateString('pt-BR')}
+            </p>
+            <p
+              data-
+              testid="customer_order_details__element-order-details-label-delivery-status"
+            >
+              { status }
+            </p>
+            <button
+              type="button"
+              data-testid="customer_order_details__button-delivery-check"
+              disabled={ status !== 'Em Trânsito' }
+              onClick={ (event) => handleStatus(event) }
+              value="Entregue"
+            >
+              MARCAR COMO ENTREGUE
+
+            </button>
           </section>
           <table className="table">
             <thead>

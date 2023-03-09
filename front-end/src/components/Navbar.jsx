@@ -24,7 +24,7 @@ export default function Navbar() {
           <li data-testid="customer_products__element-navbar-link-products">PRODUTOS</li>
         </a>
         <a
-          href="/customer/orders"
+          href={ user.role === 'seller' ? '/seller/orders' : '/customer/orders' }
         >
           <li
             data-testid="customer_products__element-navbar-link-orders"

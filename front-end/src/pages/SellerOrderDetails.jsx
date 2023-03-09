@@ -26,8 +26,8 @@ export default function SellerOrderDetails() {
         setSaleDate(data.sale.saleDate);
         setSales(data.products);
 
-        setPreparing(data.sale.status === 'Pendente');
-        setInTrasit(data.sale.status === 'Preparando');
+        setPreparing(data.sale.status === 'Pendente' || data.sale.status === 'Entregue');
+        setInTrasit(data.sale.status === 'Preparando' || data.sale.status === 'Entregue');
 
         if (data.sale.status === 'Em Trânsito') {
           setInTrasit(true);
