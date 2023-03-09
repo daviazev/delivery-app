@@ -27,7 +27,9 @@ export default function Register() {
     event.preventDefault();
     try {
       const { data } = await loginApi.post('/register', user);
-      localStorage.setItem('user', JSON.stringify(data));
+      const { id, ...userInfo } = data;
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      localStorage.setItem('userId', JSON.stringify(id));
       navigate(translate[data.role]);
     } catch (error) {
       console.error(error);

@@ -29,7 +29,7 @@ async function getUserByName(name) {
 async function register({ email, password, name, role }) {
   const pswHash = md5(password);
   const result = await User.create({ email, password: pswHash, name, role });
-  const { id: _id, password: _password, ...resto } = result.dataValues;
+  const { password: _password, ...resto } = result.dataValues;
   return resto;
 }
 
