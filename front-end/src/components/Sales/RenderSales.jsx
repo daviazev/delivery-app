@@ -1,49 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import dataTestsIds from '../../utils/dataTestsIds';
 
-export default function RenderProducts(
+export default function RenderSales(
   { id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber },
 ) {
-  // const navigate = useNavigate();
-
-  // const sellerOrderDetails = () => {
-  //   navigate(`/seller/orders/${id}`);
-  //   // setInLocalStorage();
-  // };
-
   return (
     <Link
-      data-testid={ `seller_orders__element-order-id-${id}` }
-      // onClick={ sellerOrderDetails }
+      data-testid={ `${dataTestsIds[49]}${id}` }
       to={ `/seller/orders/${id}` }
     >
       <h3
-        data-testid={ `seller_orders__element-order-${id}` }
+        data-testid={ `${dataTestsIds[49]}${id}` }
       >
         { id }
 
       </h3>
       <h3
-        data-testid={ `seller_orders__element-delivery-status-${id}` }
+        data-testid={ `${dataTestsIds[50]}${id}` }
       >
         { status }
 
       </h3>
       <h3
-        data-testid={ `seller_orders__element-order-date-${id}` }
+        data-testid={ `${dataTestsIds[51]}${id}` }
       >
         { saleDate }
 
       </h3>
       <h3
-        data-testid={ `seller_orders__element-card-price-${id}` }
+        data-testid={ `${dataTestsIds[52]}${id}` }
       >
         { totalPrice.replace('.', ',') }
 
       </h3>
       <h3
-        data-testid={ `seller_orders__element-card-address-${id}` }
+        data-testid={ `${dataTestsIds[53]}${id}` }
       >
         { `${deliveryAddress}, ${deliveryNumber}` }
       </h3>
@@ -51,7 +44,7 @@ export default function RenderProducts(
   );
 }
 
-RenderProducts.propTypes = {
+RenderSales.propTypes = {
   saleDate: PropTypes.Date,
   status: PropTypes.bool,
   totalPrice: PropTypes.number,

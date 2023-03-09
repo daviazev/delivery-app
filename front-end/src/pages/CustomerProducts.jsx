@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../axios/config';
+import dataTestsIds from '../utils/dataTestsIds';
 
 export default function CustomerProducts() {
   const [products, setProducts] = useState([]);
@@ -63,32 +64,32 @@ export default function CustomerProducts() {
         {products.map(({ id, name, price, urlImage, quantity }, index) => (
           <section key={ index }>
             <h3
-              data-testid={ `customer_products__element-card-title-${id}` }
+              data-testid={ `${dataTestsIds[15]}${id}` }
             >
               {name}
 
             </h3>
             <img
-              data-testid={ `customer_products__img-card-bg-image-${id}` }
+              data-testid={ `${dataTestsIds[17]}${id}` }
               alt={ name }
               src={ urlImage }
               width="100px"
             />
             <p
-              data-testid={ `customer_products__element-card-price-${id}` }
+              data-testid={ `${dataTestsIds[16]}${id}` }
             >
               { price.replace('.', ',') }
 
             </p>
             <button
-              data-testid={ `customer_products__button-card-rm-item-${id}` }
+              data-testid={ `${dataTestsIds[19]}${id}` }
               type="button"
               onClick={ () => decrement(id) }
             >
               REMOVER
             </button>
             <input
-              data-testid={ `customer_products__input-card-quantity-${id}` }
+              data-testid={ `${dataTestsIds[20]}${id}` }
               type="number"
               name={ `input${index}` }
               value={ quantity }
@@ -96,7 +97,7 @@ export default function CustomerProducts() {
               onChange={ ({ target: { value } }) => handleChange(id, Number(value)) }
             />
             <button
-              data-testid={ `customer_products__button-card-add-item-${id}` }
+              data-testid={ `${dataTestsIds[18]}${id}` }
               type="button"
               onClick={ () => increment(id) }
             >
@@ -106,13 +107,13 @@ export default function CustomerProducts() {
         ))}
         <button
           type="button"
-          data-testid="customer_products__button-cart"
+          data-testid={ `${dataTestsIds[21]}` }
           onClick={ () => navigate('/customer/checkout') }
           disabled={ isDisabled }
         >
           VER CARRINHO: R$
           {' '}
-          <span data-testid="customer_products__checkout-bottom-value">
+          <span data-testid={ `${dataTestsIds[22]}` }>
             {calcProducts().toFixed(2).replace('.', ',')}
           </span>
         </button>

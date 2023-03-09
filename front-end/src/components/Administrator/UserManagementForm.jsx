@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { checkEmailAndPassword, checkUser } from '../../utils/checkUser';
 import api from '../../axios/config';
+import dataTestsIds from '../../utils/dataTestsIds';
 
 export default function UserManagementForm() {
   const [name, setName] = useState('');
@@ -50,7 +51,7 @@ export default function UserManagementForm() {
       </nav>
       <section>
         <input
-          data-testid="admin_manage__input-name"
+          data-testid={ `${dataTestsIds[65]}` }
           type="text"
           onChange={ (e) => setName(e.target.value) }
           placeholder="Nome e sobrenome"
@@ -58,14 +59,14 @@ export default function UserManagementForm() {
         />
         <input
           type="email"
-          data-testid="admin_manage__input-email"
+          data-testid={ `${dataTestsIds[66]}` }
           onChange={ (e) => setEmail(e.target.value) }
           placeholder="Email"
           name="email"
         />
         <input
           type="password"
-          data-testid="admin_manage__input-password"
+          data-testid={ `${dataTestsIds[67]}` }
           onChange={ (e) => setPassword(e.target.value) }
           placeholder="password"
           name="password"
@@ -73,7 +74,7 @@ export default function UserManagementForm() {
         <select
           value={ role }
           onChange={ (e) => setRole(e.target.value) }
-          data-testid="admin_manage__select-role"
+          data-testid={ `${dataTestsIds[69]}` }
           name="role"
         >
           <option value="seller">Vendedor</option>
@@ -83,14 +84,14 @@ export default function UserManagementForm() {
       </section>
       <button
         type="button"
-        data-testid="admin_manage__button-register"
+        data-testid={ `${dataTestsIds[68]}` }
         disabled={ isDisabled }
         onClick={ registerUser }
       >
         CADASTRAR
 
       </button>
-      <span data-testid="admin_manage__element-invalid-register">{errorMessage}</span>
+      <span data-testid={ `${dataTestsIds[75]}` }>{errorMessage}</span>
     </div>
   );
 }

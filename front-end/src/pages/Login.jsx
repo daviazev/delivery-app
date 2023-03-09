@@ -4,6 +4,8 @@ import { checkEmailAndPassword } from '../utils/checkUser';
 import loginApi, { setToken } from '../axios/config';
 // import '../styles/login.css';
 
+import dataTestsIds from '../utils/dataTestsIds';
+
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
   const [isDisable, setIsDisable] = useState(true);
@@ -62,7 +64,7 @@ export default function Login() {
           name="email"
           placeholder="Email"
           onChange={ handleChange }
-          data-testid="common_login__input-email"
+          data-testid={ dataTestsIds[1] }
         />
         <input
           className="input"
@@ -70,20 +72,20 @@ export default function Login() {
           name="password"
           placeholder="Password"
           onChange={ handleChange }
-          data-testid="common_login__input-password"
+          data-testid={ dataTestsIds[2] }
         />
         <button
           className="loginBtn"
           type="submit"
           disabled={ isDisable }
-          data-testid="common_login__button-login"
+          data-testid={ dataTestsIds[3] }
         >
           Login
         </button>
         <button
           className="link"
           type="submit"
-          data-testid="common_login__button-register"
+          data-testid={ dataTestsIds[4] }
           onClick={ () => navigate('/register') }
         >
           Ainda não tenho conta
@@ -91,7 +93,7 @@ export default function Login() {
       </form>
       <span
         className="loginError"
-        data-testid="common_login__element-invalid-email"
+        data-testid={ dataTestsIds[5] }
       >
         {errorMessage}
       </span>
