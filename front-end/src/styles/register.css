@@ -1,0 +1,83 @@
+.registerContainer {
+  align-items: center;
+  background-image: url('../styles/images/pc.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.registerSection {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  justify-content: center;
+  max-width: 350px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.registerForm {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.inputRegister {
+  border: none;
+  border-radius: 5px;
+  max-width: 350px;
+  padding: 10px;
+  width: 100%;
+}
+
+.registerBtn {
+  background-color: rgb(206, 179, 29);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+  max-width: 350px;
+  padding: 10px;
+  width: 100%;
+}
+
+.registerLoginBtn {
+  background-color: rgb(99, 214, 5);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+  max-width: 350px;
+  padding: 10px;
+  width: 100%;
+}
+
+.registerError {
+  background-color: rgb(123, 233, 236);
+  border-radius: 5px;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.registerGetApp {
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.registerAppsLogo {
+  cursor: pointer;
+  width: 100%;
+}

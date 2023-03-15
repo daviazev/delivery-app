@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-// import { useNavigate } from 'react-router-dom';
-
 import api, { setToken } from '../../axios/config';
 import Loading from '../Loading';
 
@@ -26,7 +24,7 @@ export default function Sales() {
 
   return (
     <section>
-      <div>
+      <div className="sellerOrderSection">
         {sales.map(({ id,
           status, saleDate, totalPrice, deliveryAddress, deliveryNumber }, index) => (
           (<RenderSales

@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+  font-family: Inter , sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+
+  --primaryColor: rgb(3, 107, 82);
+
+  --secondaryColor: rgb(47, 193, 140);
+
+  --tertiaryColor: rgb(66, 25, 129);
+
+  --quartenaryColor: rgb(5, 108, 249);
+}

@@ -1,0 +1,11 @@
+.notFound {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.notFound span {
+  font-family: 'Press Start 2P' , cursive;
+  font-size: clamp(25px, 5vw, 500px);
+}

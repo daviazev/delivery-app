@@ -1,0 +1,87 @@
+.myOrdersSection {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+  margin: 5vh auto;
+}
+
+.myOrder {
+  align-items: center;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 7px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  font-size: larger;
+  justify-content: center;
+}
+
+.orderId, .divHourPrice {
+  display: flex;
+  flex: 1;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.orderStatus {
+  align-items: center;
+  border-radius: 5px;
+  display: flex;
+  flex: 1;
+  font-weight: 600;
+  height: 100%;
+  justify-content: center;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  width: 300px;
+}
+
+.myOrder:hover {
+  cursor: pointer;
+}
+
+.pending {
+  background-color: goldenrod;
+}
+
+.Preparing {
+  background-color: rgb(65, 201, 65);
+}
+
+.inTransit {
+  background-color: brown;
+}
+
+.delivered {
+  background-color: deepskyblue;
+}
+
+@media ( max-width : 1100px ) {
+
+  .myOrdersSection {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+@media ( max-width : 550px ) {
+
+  .myOrdersSection {
+    margin-top: 13vh;
+  }
+
+  .myOrder {
+    flex-direction: column;
+  }
+
+  .orderId, .divHourPrice {
+    align-items: center;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+
+  .orderStatus {
+    padding: 1.5rem;
+  }
+}

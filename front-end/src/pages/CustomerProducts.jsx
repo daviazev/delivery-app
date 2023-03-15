@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../axios/config';
 import dataTestsIds from '../utils/dataTestsIds';
+import '../styles/products.css';
 
 export default function CustomerProducts() {
   const [products, setProducts] = useState([]);
@@ -60,49 +61,59 @@ export default function CustomerProducts() {
   return (
     <section>
       <Navbar />
-      <section>
+      <section className="productsSection">
         {products.map(({ id, name, price, urlImage, quantity }, index) => (
-          <section key={ index }>
-            <h3
-              data-testid={ `${dataTestsIds[15]}${id}` }
-            >
-              {name}
+          <section key={ index } className="productsCard">
+            <figure className="imgCard">
+              <img
+                data-testid={ `${dataTestsIds[17]}${id}` }
+                alt={ name }
+                src={ urlImage }
+                className="productImg"
+              />
+              <p
+                data-testid={ `${dataTestsIds[16]}${id}` }
+                className="productPrice"
+              >
+                { `R$ ${price.replace('.', ',')}` }
 
-            </h3>
-            <img
-              data-testid={ `${dataTestsIds[17]}${id}` }
-              alt={ name }
-              src={ urlImage }
-              width="100px"
-            />
-            <p
-              data-testid={ `${dataTestsIds[16]}${id}` }
-            >
-              { price.replace('.', ',') }
-
-            </p>
-            <button
-              data-testid={ `${dataTestsIds[19]}${id}` }
-              type="button"
-              onClick={ () => decrement(id) }
-            >
-              REMOVER
-            </button>
-            <input
-              data-testid={ `${dataTestsIds[20]}${id}` }
-              type="number"
-              name={ `input${index}` }
-              value={ quantity }
-              min="0"
-              onChange={ ({ target: { value } }) => handleChange(id, Number(value)) }
-            />
-            <button
-              data-testid={ `${dataTestsIds[18]}${id}` }
-              type="button"
-              onClick={ () => increment(id) }
-            >
-              ADICIONAR
-            </button>
+              </p>
+            </figure>
+            <div className="cardFooter">
+              <h3
+                data-testid={ `${dataTestsIds[15]}${id}` }
+                className="productName"
+              >
+                {name}
+              </h3>
+              <div className="cardFooterDiv">
+                <button
+                  data-testid={ `${dataTestsIds[19]}${id}` }
+                  type="button"
+                  onClick={ () => decrement(id) }
+                  className="quantityBtn"
+                >
+                  -
+                </button>
+                <input
+                  data-testid={ `${dataTestsIds[20]}${id}` }
+                  type="number"
+                  name={ `input${index}` }
+                  value={ quantity }
+                  min="0"
+                  onChange={ ({ target: { value } }) => handleChange(id, Number(value)) }
+                  className="quantityInput"
+                />
+                <button
+                  data-testid={ `${dataTestsIds[18]}${id}` }
+                  type="button"
+                  onClick={ () => increment(id) }
+                  className="quantityBtn"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </section>
         ))}
         <button
@@ -110,6 +121,7 @@ export default function CustomerProducts() {
           data-testid={ `${dataTestsIds[21]}` }
           onClick={ () => navigate('/customer/checkout') }
           disabled={ isDisabled }
+          className="cartBtn"
         >
           VER CARRINHO: R$
           {' '}

@@ -1,0 +1,90 @@
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.menu-icon {
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: 20px;
+  z-index: 999;
+}
+
+.icon {
+  background-color: white;
+  border-radius: 10px;
+  display: block;
+  height: 3px;
+  margin: 5px 0;
+  transition: 500ms ease-in-out;
+  width: 25px;
+}
+
+.menu {
+  align-items: center;
+  background-color: var(--tertiaryColor);
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+  justify-content: flex-start;
+  list-style-type: none;
+  position: fixed;
+  transition: 300ms ease-in-out;
+  width: 50vw;
+}
+
+.menu li {
+  align-items: center;
+  display: flex;
+  font-size: large;
+  height: 80px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.menu a, .menu li p, .menu li button {
+  align-items: center;
+  color: white;
+  display: flex;
+  height: 100%;
+  justify-content: flex-start;
+  padding: 0 0.7rem;
+  text-decoration: none;
+  transition: 200ms ease-in-out;
+  width: 100%;
+}
+
+.menu a:hover, .menu li p:hover, .menu li button:hover {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+.mobileUsername {
+  color: white;
+  text-transform: uppercase;
+}
+
+.mobileLogoutBtn {
+  background-color: var(--tertiaryColor);
+  border: none;
+  color: white;
+  font-size: large;
+}
+
+.menu-icon, .nav {
+  background-color: var(--primaryColor);
+}
+
+.menu-icon.active .icon:nth-child( 1 ) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon.active .icon:nth-child( 2 ) {
+  opacity: 0;
+}
+
+.menu-icon.active .icon:nth-child( 3 ) {
+  transform: rotate(-45deg) translate(7px, -8px);
+}

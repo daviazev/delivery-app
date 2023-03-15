@@ -1,0 +1,104 @@
+.productsSection {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 3rem;
+  justify-content: center;
+  margin-bottom: 10vh;
+  margin-top: 10vh;
+}
+
+.productsCard {
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  width: 300px;
+}
+
+.imgCard {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.productImg {
+  height: 250px;
+}
+
+.productPrice {
+  font-size: 1.5rem;
+  font-weight: 900;
+  left: 10px;
+  position: absolute;
+  top: 10px;
+}
+
+.cardFooter {
+  align-items: center;
+  background-color: rgb(234, 238, 243);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  height: 100px;
+  justify-content: center;
+  width: 100%;
+}
+
+.cardFooterDiv {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.quantityBtn {
+  background-color: rgb(3, 107, 82);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  height: 50px;
+  width: 50px;
+}
+
+.quantityBtn:hover {
+  cursor: pointer;
+}
+
+.quantityBtn:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.quantityBtn:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.quantityInput {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 50px;
+  outline: none;
+  text-align: center;
+  width: 50px;
+}
+
+.quantityInput::-webkit-inner-spin-button, .quantityInput::-webkit-outer-spin-button {
+  display: none;
+}
+
+
+.cartBtn {
+  background-color: rgb(3, 107, 82);
+  border: none;
+  border-radius: 5px;
+  bottom: 30px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  margin-left: 30px;
+  padding: 1rem 2rem;
+  position: fixed;
+  right: 30px;
+}

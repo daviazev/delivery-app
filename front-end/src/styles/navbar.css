@@ -1,0 +1,52 @@
+@media ( min-width : 550px ) {
+
+  .header {
+    background-color: var(--primaryColor);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .headerDiv {
+    display: flex;
+    flex-flow: row nowrap;
+    position: relative;
+    width: auto;
+  }
+
+  .headerInfo {
+    border: none;
+    color: white;
+    font-weight: 800;
+    padding: 1.5rem 2rem;
+  }
+
+  .btn:hover {
+    cursor: pointer;
+  }
+
+  .primaryColor {
+    background-color: var(--secondaryColor);
+    color: black;
+  }
+
+  .secondColor {
+    background-color: var(--primaryColor);
+  }
+
+  .username {
+    background-color: var(--tertiaryColor);
+    text-transform: uppercase;
+  }
+
+  .logoutBtn {
+    background-color: var(--quartenaryColor);
+  }
+}
+
+@media ( min-width : 800px ) {
+
+  .headerInfo {
+    padding: 1.5rem 4rem;
+  }
+}

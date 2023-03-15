@@ -3,11 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api, { setToken } from '../axios/config';
 import dataTestsIds from '../utils/dataTestsIds';
+import '../styles/myOrders.css';
 
 export default function MyOrders() {
   const [sales, setSalles] = useState([]);
 
   const navigate = useNavigate();
+
+  const translateCss = {
+    Pendente: 'pending',
+    Preparando: 'Preparing',
+    'Em Trânsito': 'inTransit',
+    Entregue: 'delivered',
+  };
+
+  const FOUR = 4;
 
   useEffect(() => {
     const findSalles = async () => {
@@ -26,23 +36,25 @@ export default function MyOrders() {
   return (
     <section>
       <Navbar />
-      <section>
+      <section className="myOrdersSection">
         {sales.map(({ id, status, saleDate, totalPrice }, index) => (
           <button
             type="button"
             key={ index }
+            className="myOrder"
             onClick={ () => navigate(`/customer/orders/${id}`) }
           >
-            <div data-testid={ `${dataTestsIds[34]}${id}` }>
+            <div data-testid={ `${dataTestsIds[34]}${id}` } className="orderId">
               <p>Pedido</p>
-              <p>{id}</p>
+              <p>{ id.toString().padStart(FOUR, '0') }</p>
             </div>
             <span
               data-testid={ `${dataTestsIds[35]}${id}` }
+              className={ `orderStatus ${translateCss[status]}` }
             >
               { status }
             </span>
-            <div>
+            <div className="divHourPrice">
               <p
                 data-testid={ `${dataTestsIds[36]}${id}` }
               >

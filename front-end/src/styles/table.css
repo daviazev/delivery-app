@@ -1,0 +1,101 @@
+.tableContainer {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 10vh auto 4vh;
+  width: 90vw;
+}
+
+.tableSection {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+  padding: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.tableTitle {
+  align-self: flex-start;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 10px auto 100px;
+  text-align: center;
+  width: 100%;
+}
+
+.tableItemsTr td {
+  padding: 10px 0;
+}
+
+.tableItem {
+  align-items: center;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  max-height: 50px;
+  min-width: 50px;
+  padding: 20px;
+}
+
+.itemIndex {
+  background-color: var(--secondaryColor);
+  border-radius: 10px 0 0 10px;
+}
+
+.description {
+  background-color: rgba(224, 233, 231, 0.493);
+  min-width: 150px;
+}
+
+.quantity {
+  background-color: var(--primaryColor);
+  color: white;
+}
+
+.price {
+  background-color: var(--tertiaryColor);
+  color: white;
+}
+
+.totalPrice {
+  background-color: var(--quartenaryColor);
+  color: white;
+}
+
+.removeCollumnBtn {
+  background-color: var(--secondaryColor);
+  border: none;
+  border-radius: 0 10px 10px 0;
+  color: white;
+  cursor: pointer;
+  padding: 22px;
+  width: 100%;
+}
+
+.tableTotalPrice {
+  background-color: var(--primaryColor);
+  border-radius: 10px;
+  bottom: 10px;
+  color: white;
+  font-size: 2rem;
+  padding: 1rem;
+  position: absolute;
+  right: 10px;
+}
+
+@media ( max-width : 550px ) {
+
+  .tableContainer {
+    margin-top: 15vh;
+  }
+
+  .tableTotalPrice {
+    font-size: 1.5rem;
+    left: 10px;
+    text-align: center;
+  }
+
+}

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkEmailAndPassword } from '../utils/checkUser';
 import loginApi, { setToken } from '../axios/config';
-// import '../styles/login.css';
+import logo from '../styles/images/logo.png';
+import cellPhone from '../styles/images/cellphone.png';
+import apps from '../styles/images/apps.png';
+import '../styles/login.css';
 
 import dataTestsIds from '../utils/dataTestsIds';
 
@@ -55,48 +58,55 @@ export default function Login() {
   };
 
   return (
-    <section>
-      <h1 className="app">App Delivery</h1>
-      <form className="form" onSubmit={ login }>
-        <input
-          className="input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={ handleChange }
-          data-testid={ dataTestsIds[1] }
-        />
-        <input
-          className="input"
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={ handleChange }
-          data-testid={ dataTestsIds[2] }
-        />
-        <button
-          className="loginBtn"
-          type="submit"
-          disabled={ isDisable }
-          data-testid={ dataTestsIds[3] }
-        >
-          Login
-        </button>
-        <button
-          className="link"
-          type="submit"
-          data-testid={ dataTestsIds[4] }
-          onClick={ () => navigate('/register') }
-        >
-          Ainda não tenho conta
-        </button>
-      </form>
-      <span
-        className="loginError"
-        data-testid={ dataTestsIds[5] }
-      >
-        {errorMessage}
-      </span>
+    <section className="sectionContainer">
+      <section className="loginSection">
+        <img src={ cellPhone } alt="cellphone" className="cellphone" />
+        <section className="formSection">
+          <img src={ logo } className="app" alt="logo" />
+          <form className="form" onSubmit={ login }>
+            <input
+              className="input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={ handleChange }
+              data-testid={ dataTestsIds[1] }
+            />
+            <input
+              className="input"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={ handleChange }
+              data-testid={ dataTestsIds[2] }
+            />
+            <button
+              className="loginBtn"
+              type="submit"
+              disabled={ isDisable }
+              data-testid={ dataTestsIds[3] }
+            >
+              Entrar
+            </button>
+            <button
+              className="createAccount"
+              type="submit"
+              data-testid={ dataTestsIds[4] }
+              onClick={ () => navigate('/register') }
+            >
+              Ainda não tenho conta
+            </button>
+            <span
+              className="loginError"
+              data-testid={ dataTestsIds[5] }
+            >
+              {errorMessage}
+            </span>
+          </form>
+          <p className="getApp">Obtenha o Aplicativo</p>
+          <img src={ apps } alt="apps logo" className="appsLogo" />
+        </section>
+      </section>
     </section>
   );
 }

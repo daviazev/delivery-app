@@ -1,0 +1,125 @@
+.sellerOrderSection {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+  margin: 5vh auto;
+}
+
+.sellerOrder {
+  align-items: center;
+  background-color: rgba(224, 233, 231, 0.493);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 7px 5px rgba(0, 0, 0, 0.3);
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.sellerOrderId {
+  background-color: white;
+  border-radius: 10px 0 0 10px;
+  font-size: larger;
+  height: 100%;
+  width: 100%;
+}
+
+.sellerOrderId, .sellerOrderPrice {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+  width: 150px;
+}
+
+.sellerOrderStatus {
+  align-items: center;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 200px;
+}
+
+.divContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+}
+
+.statasDatePriceDiv {
+  display: flex;
+}
+
+.address {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+}
+
+.pending {
+  background-color: goldenrod;
+}
+
+.Preparing {
+  background-color: rgb(65, 201, 65);
+}
+
+.inTransit {
+  background-color: brown;
+}
+
+.delivered {
+  background-color: deepskyblue;
+}
+
+@media ( max-width : 1200px ) {
+
+  .sellerOrderSection {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+@media ( max-width : 550px ) {
+
+  .sellerOrderSection {
+    margin-top: 15vh;
+  }
+
+  .sellerOrder {
+    flex-direction: column;
+    width: 300px;
+  }
+
+  .sellerOrderId {
+    flex-flow: row nowrap;
+    width: 100%;
+  }
+
+  .divContainer {
+    width: 100%;
+  }
+
+  .sellerOrderStatus {
+    height: 5rem;
+    width: 100%;
+  }
+
+  .statasDatePriceDiv {
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .address {
+    justify-content: center;
+  }
+}

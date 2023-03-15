@@ -16,6 +16,14 @@ export default function SellerOrderDetails() {
   const [preparing, setPreparing] = useState(true);
   const [inTransit, setInTrasit] = useState(false);
 
+  const thArr = [
+    'Item',
+    'Descrição',
+    'Quantidade',
+    'Valor Unitário',
+    'Sub-total',
+  ];
+
   useEffect(() => {
     const getSaleDetails = async () => {
       const { token } = JSON.parse(localStorage.getItem('user'));
@@ -74,15 +82,12 @@ export default function SellerOrderDetails() {
       <span
         data-testid={ dataTestsIds[56] }
       >
-        {' '}
         {formatDate(saleDate)}
       </span>
       <span
         data-testid={ dataTestsIds[55] }
       >
-        {' '}
         {status}
-        {' '}
       </span>
       <button
         data-testid={ dataTestsIds[57] }
@@ -91,7 +96,6 @@ export default function SellerOrderDetails() {
         disabled={ inTransit }
         value="Preparando"
       >
-        {' '}
         Preparar Pedido
       </button>
       <button
@@ -101,51 +105,50 @@ export default function SellerOrderDetails() {
         onClick={ (event) => handleStatus(event) }
         value="Em Trânsito"
       >
-        {' '}
         Saiu para entrega
       </button>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descriçao</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sales.map(({ quantity, name, price }, index) => (
-            <tr key={ index }>
-              <td
-                data-testid={ `${dataTestsIds[59]}${index}` }
-              >
-                {index + 1}
-              </td>
-              <td
-                data-testid={ `${dataTestsIds[60]}${index}` }
-              >
-                {name}
-              </td>
-              <td
-                data-testid={ `${dataTestsIds[61]}${index}` }
-              >
-                {quantity}
-              </td>
-              <td
-                data-testid={ `${dataTestsIds[62]}${index}` }
-              >
-                {price.replace('.', ',')}
-              </td>
-              <td
-                data-testid={ `${dataTestsIds[63]}${index}` }
-              >
-                {`${(quantity * price).toFixed(2).replace('.', ',')}`}
-              </td>
+      <section>
+        <table>
+          <thead>
+            <tr>
+              {thArr.map((element, index) => (
+                <th key={ index } className="thDetailsTable">{element}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sales.map(({ quantity, name, price }, index) => (
+              <tr key={ index }>
+                <td
+                  data-testid={ `${dataTestsIds[59]}${index}` }
+                >
+                  {index + 1}
+                </td>
+                <td
+                  data-testid={ `${dataTestsIds[60]}${index}` }
+                >
+                  {name}
+                </td>
+                <td
+                  data-testid={ `${dataTestsIds[61]}${index}` }
+                >
+                  {quantity}
+                </td>
+                <td
+                  data-testid={ `${dataTestsIds[62]}${index}` }
+                >
+                  {price.replace('.', ',')}
+                </td>
+                <td
+                  data-testid={ `${dataTestsIds[63]}${index}` }
+                >
+                  {`${(quantity * price).toFixed(2).replace('.', ',')}`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
       <div
         data-testid={ `${dataTestsIds[64]}` }
       >
